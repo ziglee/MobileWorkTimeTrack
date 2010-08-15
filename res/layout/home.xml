@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+        
+	    <TimePicker android:id="@+id/main_time_picker"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1" 
+	        />
+	    
+	    <LinearLayout android:orientation="vertical"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1">
+	        <Button
+	            android:id="@+id/reset_button"
+	            android:layout_width="fill_parent" 
+	            android:layout_height="wrap_content" 
+	            android:layout_weight="1"
+	            android:text="Reset"/>
+		    <Button
+		        android:id="@+id/check_button"
+		        android:layout_width="fill_parent" 
+		        android:layout_height="wrap_content"
+	            android:layout_weight="1"/>
+	    </LinearLayout>
+	</LinearLayout>
+    
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+	    <TextView 
+	        android:text="Checkin:"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"/>
+	    <TextView 
+	        android:id="@+id/horario_entrada"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"/>
+    </LinearLayout>
+    
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+	    <TextView 
+	        android:text="Checkout:"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+	    <TextView 
+	        android:id="@+id/horario_saida"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"/>
+    </LinearLayout>
+    	        
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+        <TextView 
+	        android:text="Lunch time:"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+	        
+	    <TextView 
+	        android:id="@+id/almoco"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"/>
+    </LinearLayout>
+        
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+        <TextView 
+	        android:text="Total:"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+	        
+	    <TextView 
+	        android:id="@+id/total"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"
+	        android:textStyle="bold"
+            android:layout_weight="1"
+            android:gravity="right"/>
+    </LinearLayout>
+</LinearLayout>
