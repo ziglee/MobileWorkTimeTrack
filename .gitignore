@@ -1,4 +1,4 @@
 bin/*
 .settings/*
-.gen/*
+gen/*
 Thumbs.db
