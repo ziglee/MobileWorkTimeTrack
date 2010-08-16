@@ -37,70 +37,32 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         
-	    <TextView 
-	        android:text="Checkin:"
-	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"/>
-	    <TextView 
-	        android:id="@+id/horario_entrada"
-	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"/>
+	    <TextView android:text="Checkin:" style="@style/BenefitFont"/>
+	    <TextView android:id="@+id/horario_entrada" style="@style/BenefitFont.Value"/>
     </LinearLayout>
     
     <LinearLayout android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         
-	    <TextView 
-	        android:text="Checkout:"
-	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-	    <TextView 
-	        android:id="@+id/horario_saida"
-	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"/>
+	    <TextView android:text="Checkout:" style="@style/BenefitFont"/>
+	    <TextView android:id="@+id/horario_saida"  style="@style/BenefitFont.Value"/>
     </LinearLayout>
     	        
     <LinearLayout android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         
-        <TextView 
-	        android:text="Lunch time:"
-	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-	        
-	    <TextView 
-	        android:id="@+id/almoco"
-	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"/>
+        <TextView android:text="Lunch time:" style="@style/BenefitFont"/>
+	    <ImageView style="@style/SideImage.Pencil" />
+	    <TextView android:id="@+id/almoco" style="@style/BenefitFont.Value"/>
     </LinearLayout>
-        
+    
     <LinearLayout android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         
-        <TextView 
-	        android:text="Total:"
-	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-	        
-	    <TextView 
-	        android:id="@+id/total"
-	        android:layout_width="fill_parent" 
-	        android:layout_height="wrap_content"
-	        android:textStyle="bold"
-            android:layout_weight="1"
-            android:gravity="right"/>
+        <TextView android:text="Total:" style="@style/BenefitFont"/>
+	    <TextView android:id="@+id/total" style="@style/BenefitFont.Value"/>
     </LinearLayout>
 </LinearLayout>

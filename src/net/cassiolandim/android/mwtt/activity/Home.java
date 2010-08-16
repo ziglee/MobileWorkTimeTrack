@@ -25,17 +25,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class Home extends Activity {
 	
 	public static final String LOG_TAG = "MobileWorkTimeTrack";
 	
+	private Dialog lunchDialog;
 	private Dialog sobreDialog;
 	private TimePicker timePicker;
+	private TimePicker lunchPicker;
 	private Button checkButton;
 	private Button resetButton;
 	private TextView horarioEntrada;
@@ -49,7 +49,8 @@ public class Home extends Activity {
 	private static final int MENU_ABOUT = 2;
 	private static final int MENU_EXIT = 3;
 	
-	private static final int DIALOG_SOBRE_ID = 0;
+	private static final int DIALOG_LUNCH_ID = 1;
+	private static final int DIALOG_ABOUT_ID = 0;
 	
 	private final Intent emailIntent;
 	
@@ -101,7 +102,7 @@ public class Home extends Activity {
     
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(0, MENU_HISTORY, 0, "HistÛrico").setIcon(R.drawable.ic_menu_view);
+	    menu.add(0, MENU_HISTORY, 0, "Hist√≥rico").setIcon(R.drawable.ic_menu_view);
 	    menu.add(0, MENU_ABOUT, 1, "Sobre").setIcon(R.drawable.ic_menu_info_details);
 	    menu.add(0, MENU_EXIT, 2, "Sair").setIcon(R.drawable.ic_menu_close_clear_cancel);
 	    return true;
@@ -111,10 +112,11 @@ public class Home extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case MENU_HISTORY:
-        	Toast.makeText(Home.this, "Exibir histÛrico", Toast.LENGTH_SHORT).show();
+        	//Toast.makeText(Home.this, "Exibir hist√≥rico", Toast.LENGTH_SHORT).show();
+        	startActivity(new Intent(this, History.class));
         	return true;
         case MENU_ABOUT:
-        	showDialog(DIALOG_SOBRE_ID);
+        	showDialog(DIALOG_ABOUT_ID);
         	return true;
         case MENU_EXIT:
         	finish();
@@ -128,8 +130,11 @@ public class Home extends Activity {
     protected Dialog onCreateDialog(int id) {
     	Dialog dialog;
         switch(id) {
-        case DIALOG_SOBRE_ID:
+        case DIALOG_ABOUT_ID:
             dialog = sobreDialog;
+            break;
+        case DIALOG_LUNCH_ID:
+            dialog = lunchDialog;
             break;
         default:
             dialog = null;
@@ -145,6 +150,7 @@ public class Home extends Activity {
         horarioSaida = (TextView)findViewById(R.id.horario_saida);
         almoco = (TextView)findViewById(R.id.almoco);
         total = (TextView)findViewById(R.id.total);
+        lunchDialog = createLunchDialog();
 		sobreDialog = createSobreDialog();
 
         timePicker.setIs24HourView(true);
@@ -186,6 +192,13 @@ public class Home extends Activity {
 			@Override
 			public void onClick(View v) {
 				resetAlertDialog.show();
+			}
+		});
+        
+        almoco.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showDialog(DIALOG_LUNCH_ID);
 			}
 		});
 	}
@@ -247,19 +260,47 @@ public class Home extends Activity {
     	dialog.setContentView(R.layout.sobre_dialog);
     	dialog.setTitle("Sobre");
 
-    	ImageView image = (ImageView) dialog.findViewById(R.id.sobre_image);
-    	image.setImageResource(R.drawable.creep_003);
-    	
     	TextView text = (TextView) dialog.findViewById(R.id.sobre_text);
     	text.setAutoLinkMask(Linkify.EMAIL_ADDRESSES);
     	text.setLinksClickable(false);
-    	text.setText("Desenvolvido por C·ssio Landim Ribeiro.\nclandim@ciandt.com.\nTodos os direitos reservados.");
+    	text.setText("Desenvolvido por C√°ssio Landim Ribeiro.\nclandim@ciandt.com.\nTodos os direitos reservados.");
     	text.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 		    	startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 			}
 		});
+    	return dialog;
+    }
+    
+    private Dialog createLunchDialog(){
+    	final Dialog dialog = new Dialog(this);
+    	dialog.setContentView(R.layout.lunch_dialog);
+    	dialog.setTitle("Tempo de Almo√ßo:");
+    	
+    	lunchPicker = (TimePicker) dialog.findViewById(R.id.lunch_picker);
+    	Button ok = (Button) dialog.findViewById(R.id.lunch_ok);
+    	Button cancel = (Button) dialog.findViewById(R.id.lunch_cancel);
+    	
+    	lunchPicker.setIs24HourView(true);
+    	
+    	ok.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				tt.hourLunch = lunchPicker.getCurrentHour();
+				tt.minuteLunch = lunchPicker.getCurrentMinute();
+				updateDisplayTimeTrack();
+				dialog.dismiss();
+			}
+		});
+    	
+    	cancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+    	
     	return dialog;
     }
     
@@ -275,7 +316,7 @@ public class Home extends Activity {
 	        	checkButton.setText("Checkout");
 	        	checkButton.setEnabled(false);
 	    	}else{
-	    		checkButton.setText("Checkin");
+	    		checkButton.setText("Checkout");
 	        	checkButton.setEnabled(true);
 	    	}
     	}else{
