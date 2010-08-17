@@ -10,27 +10,13 @@
         <item name="android:textColor">#000000</item>
     </style>
     
-    <style name="HomeLayoutRow">
-        <item name="android:layout_width">fill_parent</item> 
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">horizontal</item>
-        <!-- <item name="android:background">#2F2F2F</item> -->
-        <item name="android:layout_marginBottom">3sp</item>
-    </style>
-    
-    <style name="BenefitFont" parent="@android:style/TextAppearance.Medium">
+    <style name="MainFont" parent="@android:style/TextAppearance.Medium">
     	<item name="android:layout_weight">1</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
     
-    <style name="BenefitFont.Red">
-        <item name="android:textColor">#FF0000</item>
-    </style>
-    
-    <style name="BenefitFont.Value">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="MainFont.Value">
         <item name="android:layout_weight">2</item>
         <item name="android:gravity">right</item>
     </style>
@@ -45,11 +31,6 @@
     
     <style name="SideImage.Pencil">
     	<item name="android:src">@drawable/pencil</item>
-        <item name="android:paddingRight">5sp</item>
-    </style>
-    
-    <style name="SideImage.Help">
-        <item name="android:src">@drawable/help</item>
         <item name="android:paddingRight">5sp</item>
     </style>
 </resources>

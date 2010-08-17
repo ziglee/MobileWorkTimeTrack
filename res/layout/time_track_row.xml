@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<TextView android:id="@+id/row_date"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    style="@style/MainFont"
+	    android:text="2010-08-16"/>
+	    
+    <RelativeLayout android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/row_date">
+	    
+	    <TextView android:id="@+id/row_details"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        style="@style/MainFont.Value"
+	        android:text="9:00"/>
+    </RelativeLayout>
+</RelativeLayout>

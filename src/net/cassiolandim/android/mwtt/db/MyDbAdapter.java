@@ -27,7 +27,7 @@ public class MyDbAdapter {
 	public static final String KEY_MINUTE_LUNCH = "minute_lunch";
 	
 	public static final String[] columns = new String[] {
-			KEY_ROWID, "date(" + KEY_ENTRY_DATE + ")", 
+			KEY_ROWID, "date(" + KEY_ENTRY_DATE + ") as " + KEY_ENTRY_DATE, 
     		KEY_HOUR_IN, KEY_MINUTE_IN,
             KEY_HOUR_OUT, KEY_MINUTE_OUT, 
             KEY_HOUR_LUNCH, KEY_MINUTE_LUNCH}; 
@@ -63,7 +63,10 @@ public class MyDbAdapter {
         initialValues.put(KEY_HOUR_LUNCH, tt.hourLunch);
         initialValues.put(KEY_MINUTE_LUNCH, tt.minuteLunch);
 
-        return mDb.insert(DATABASE_TABLE, null, initialValues);
+        int id = (int) mDb.insert(DATABASE_TABLE, null, initialValues);
+        tt.id = id;
+        
+		return id;
     }
     
     public boolean deleteTimeTrack(long rowId) {
@@ -75,7 +78,7 @@ public class MyDbAdapter {
     }
     
     public Cursor fetchAllTimeTracks() {
-        return mDb.query(DATABASE_TABLE, columns, null, null, null, null, null);
+        return mDb.query(DATABASE_TABLE, columns, null, null, null, null, KEY_ENTRY_DATE + " desc");
     }
     
     public Cursor fetchTimeTrack(long rowId) throws SQLException {
@@ -93,24 +96,33 @@ public class MyDbAdapter {
         String selection = KEY_ENTRY_DATE + " = ?";
 		Cursor mCursor = mDb.query(DATABASE_TABLE, columns, selection, new String[]{getTodayDateFormated()}, 
 				null, null, KEY_ENTRY_DATE + " desc");
+		
+		TimeTrack tt = null;
         if (mCursor.getCount() > 0) {
             mCursor.moveToFirst();
-            return populateTimeTrack(mCursor);
+            tt = populateTimeTrack(mCursor);
         }
         
-        return null;
+        return tt;
     }
     
-    public boolean updateTimeTrack(long rowId, TimeTrack tt) {
-        ContentValues args = new ContentValues();
-        args.put(KEY_HOUR_LUNCH, tt.hourLunch);
-        args.put(KEY_MINUTE_LUNCH, tt.minuteLunch);
+    public boolean updateTimeTrack(TimeTrack tt) {
+    	TimeTrack temp = fetchTodayTimeTrack();
+    	
+    	if(temp != null){
+	        ContentValues args = new ContentValues();
+	        args.put(KEY_HOUR_LUNCH, tt.hourLunch);
+	        args.put(KEY_MINUTE_LUNCH, tt.minuteLunch);
 
-        return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
+	        return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + temp.id, null) > 0;
+    	}
+        
+        return false;
     }
     
     public static TimeTrack populateTimeTrack(Cursor cursor){
     	TimeTrack tt = new TimeTrack();
+    	tt.id = cursor.getInt(0);
     	
     	try {
 			tt.date = sdf.parse(cursor.getString(1));

@@ -20,6 +20,7 @@ public class TimeTrack implements Serializable {
 		nf.setMaximumFractionDigits(0);
 	}
 	
+	public Integer id;
 	public Date date;
 	public Integer hourIn;
 	public Integer minuteIn;
@@ -74,7 +75,7 @@ public class TimeTrack implements Serializable {
 	
 	public boolean isBeforeToday(){
 		Calendar today = new GregorianCalendar();
-		today.set(Calendar.HOUR, 0);
+		today.set(Calendar.HOUR_OF_DAY, 0);
 		today.set(Calendar.MINUTE, 0);
 		today.set(Calendar.SECOND, 0);
 		today.set(Calendar.MILLISECOND, 0);

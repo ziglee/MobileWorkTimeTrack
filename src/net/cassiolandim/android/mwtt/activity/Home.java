@@ -25,8 +25,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class Home extends Activity {
 	
@@ -38,6 +40,7 @@ public class Home extends Activity {
 	private TimePicker lunchPicker;
 	private Button checkButton;
 	private Button resetButton;
+	private ImageView imgLunch;
 	private TextView horarioEntrada;
 	private TextView horarioSaida;
 	private TextView almoco;
@@ -72,7 +75,6 @@ public class Home extends Activity {
         mDbHelper.open();
         
         bindComponents();
-        loadPreferences();
         loadPendingTimeTrack();
         updateDisplayTimeTrack();
     }
@@ -112,13 +114,13 @@ public class Home extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case MENU_HISTORY:
-        	//Toast.makeText(Home.this, "Exibir histórico", Toast.LENGTH_SHORT).show();
         	startActivity(new Intent(this, History.class));
         	return true;
         case MENU_ABOUT:
         	showDialog(DIALOG_ABOUT_ID);
         	return true;
         case MENU_EXIT:
+        	Toast.makeText(Home.this, "Bye", Toast.LENGTH_SHORT).show();
         	finish();
 	    	return true;
         default:
@@ -150,6 +152,7 @@ public class Home extends Activity {
         horarioSaida = (TextView)findViewById(R.id.horario_saida);
         almoco = (TextView)findViewById(R.id.almoco);
         total = (TextView)findViewById(R.id.total);
+        imgLunch = (ImageView)findViewById(R.id.img_lunch_dialog);
         lunchDialog = createLunchDialog();
 		sobreDialog = createSobreDialog();
 
@@ -195,16 +198,12 @@ public class Home extends Activity {
 			}
 		});
         
-        almoco.setOnClickListener(new OnClickListener() {
+        imgLunch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showDialog(DIALOG_LUNCH_ID);
 			}
 		});
-	}
-    
-    private void loadPreferences() {
-    	
 	}
 	
 	private void loadPendingTimeTrack(){
@@ -283,12 +282,15 @@ public class Home extends Activity {
     	Button cancel = (Button) dialog.findViewById(R.id.lunch_cancel);
     	
     	lunchPicker.setIs24HourView(true);
+    	lunchPicker.setCurrentHour(1);
+    	lunchPicker.setCurrentMinute(0);
     	
     	ok.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				tt.hourLunch = lunchPicker.getCurrentHour();
 				tt.minuteLunch = lunchPicker.getCurrentMinute();
+				mDbHelper.updateTimeTrack(tt);
 				updateDisplayTimeTrack();
 				dialog.dismiss();
 			}
@@ -308,6 +310,9 @@ public class Home extends Activity {
     	if(tt.hourIn != null){
 	    	horarioEntrada.setText(tt.getTimeIn());
 	    	almoco.setText(tt.getTimeLunch());
+	    	
+	    	lunchPicker.setCurrentHour(tt.hourLunch);
+			lunchPicker.setCurrentMinute(tt.minuteLunch);
 	    	
 	    	if(tt.hourOut != null){
 	    		horarioSaida.setText(tt.getTimeOut());
