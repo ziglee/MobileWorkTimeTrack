@@ -20,6 +20,12 @@ public class History extends ListActivity {
         fillData();
     }
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mDbHelper.close();
+	}
+	
 	private void fillData() {
         Cursor c = mDbHelper.fetchAllTimeTracks();
         startManagingCursor(c);
