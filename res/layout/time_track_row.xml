@@ -15,10 +15,42 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@id/row_date">
 	    
-	    <TextView android:id="@+id/row_details"
+	    <ImageView android:id="@+id/img_checkin" style="@style/SideImage" 
+	       android:src="@drawable/down_48" 
+	       android:paddingRight="5px"
+	       android:maxHeight="23sp"/>
+	    
+	    <TextView android:id="@+id/row_checkin"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        style="@style/MainFont.Value"
-	        android:text="9:00"/>
+	        android:text="9:00"
+	        android:layout_toRightOf="@id/img_checkin"/>
+	        
+	    <ImageView android:id="@+id/img_checkout" style="@style/SideImage" android:src="@drawable/up_48" 
+	       android:layout_toRightOf="@id/row_checkin"
+	       android:paddingLeft="8px" 
+	       android:paddingRight="5px"
+	       android:maxHeight="23sp"/>
+	    
+        <TextView android:id="@+id/row_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MainFont.Value"
+            android:text="18:00"
+            android:layout_toRightOf="@id/img_checkout"/>
+            
+        <ImageView android:id="@+id/img_total" style="@style/SideImage" android:src="@drawable/tick_48" 
+           android:layout_toRightOf="@id/row_checkout" 
+           android:paddingLeft="8px"
+           android:paddingRight="5px"
+           android:maxHeight="23sp"/>
+            
+        <TextView android:id="@+id/row_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MainFont.Value"
+            android:text="8:00"
+            android:layout_toRightOf="@id/img_total"/>
     </RelativeLayout>
 </RelativeLayout>
