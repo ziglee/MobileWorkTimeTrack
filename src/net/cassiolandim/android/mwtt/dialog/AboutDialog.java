@@ -27,11 +27,11 @@ public class AboutDialog extends Dialog {
     	TextView text = (TextView) findViewById(R.id.sobre_text);
     	text.setAutoLinkMask(Linkify.EMAIL_ADDRESSES);
     	text.setLinksClickable(false);
-    	text.setText("Desenvolvido por Cássio Landim Ribeiro.\nclandim@ciandt.com.\nTodos os direitos reservados.");
+    	text.setText("Desenvolvido por Cássio Landim Ribeiro.\nziglee@gmail.com.\nTodos os direitos reservados.");
     	text.setOnClickListener(new TextView.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+				context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
 			}
 		});
 	}

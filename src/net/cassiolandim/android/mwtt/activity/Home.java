@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import net.cassiolandim.android.mwtt.R;
 import net.cassiolandim.android.mwtt.db.MyDbAdapter;
 import net.cassiolandim.android.mwtt.dialog.AboutDialog;
+import net.cassiolandim.android.mwtt.dialog.LunchDialog;
 import net.cassiolandim.android.mwtt.entity.TimeTrack;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,10 +35,9 @@ public class Home extends Activity {
 	
 	public static final String LOG_TAG = "MobileWorkTimeTrack";
 	
-	private Dialog lunchDialog;
+	private LunchDialog lunchDialog;
 	private AboutDialog sobreDialog;
 	private TimePicker timePicker;
-	private TimePicker lunchPicker;
 	private Button checkButton;
 	private Button resetButton;
 	private ImageView imgLunch;
@@ -143,8 +143,19 @@ public class Home extends Activity {
         almoco = (TextView)findViewById(R.id.almoco);
         total = (TextView)findViewById(R.id.total);
         imgLunch = (ImageView)findViewById(R.id.img_lunch_dialog);
-        lunchDialog = createLunchDialog();
+        lunchDialog = new LunchDialog(this);
 		sobreDialog = new AboutDialog(this);
+		
+		lunchDialog.setOkOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				tt.hourLunch = lunchDialog.getCurrentHour();
+				tt.minuteLunch = lunchDialog.getCurrentMinute();
+				mDbHelper.updateTimeTrack(tt);
+				updateDisplayTimeTrack();
+				lunchDialog.dismiss();
+			}
+		});
 
         timePicker.setIs24HourView(true);
         checkButton.setOnClickListener(new OnClickListener() {
@@ -244,47 +255,10 @@ public class Home extends Activity {
     	updateDisplayTimeTrack();
 	}
     
-    private Dialog createLunchDialog(){
-    	final Dialog dialog = new Dialog(this);
-    	dialog.setContentView(R.layout.lunch_dialog);
-    	dialog.setTitle("Tempo de Almoço:");
-    	
-    	lunchPicker = (TimePicker) dialog.findViewById(R.id.lunch_picker);
-    	Button ok = (Button) dialog.findViewById(R.id.lunch_ok);
-    	Button cancel = (Button) dialog.findViewById(R.id.lunch_cancel);
-    	
-    	lunchPicker.setIs24HourView(true);
-    	lunchPicker.setCurrentHour(1);
-    	lunchPicker.setCurrentMinute(0);
-    	
-    	ok.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				tt.hourLunch = lunchPicker.getCurrentHour();
-				tt.minuteLunch = lunchPicker.getCurrentMinute();
-				mDbHelper.updateTimeTrack(tt);
-				updateDisplayTimeTrack();
-				dialog.dismiss();
-			}
-		});
-    	
-    	cancel.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-    	
-    	return dialog;
-    }
-    
     private void updateDisplayTimeTrack(){
     	if(tt.hourIn != null){
 	    	horarioEntrada.setText(tt.getTimeIn());
 	    	almoco.setText(tt.getTimeLunch());
-	    	
-	    	lunchPicker.setCurrentHour(tt.hourLunch);
-			lunchPicker.setCurrentMinute(tt.minuteLunch);
 	    	
 	    	if(tt.hourOut != null){
 	    		horarioSaida.setText(tt.getTimeOut());
