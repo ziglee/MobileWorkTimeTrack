@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 
 import net.cassiolandim.android.mwtt.R;
 import net.cassiolandim.android.mwtt.db.MyDbAdapter;
+import net.cassiolandim.android.mwtt.dialog.AboutDialog;
 import net.cassiolandim.android.mwtt.entity.TimeTrack;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,7 +20,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +35,7 @@ public class Home extends Activity {
 	public static final String LOG_TAG = "MobileWorkTimeTrack";
 	
 	private Dialog lunchDialog;
-	private Dialog sobreDialog;
+	private AboutDialog sobreDialog;
 	private TimePicker timePicker;
 	private TimePicker lunchPicker;
 	private Button checkButton;
@@ -54,16 +54,6 @@ public class Home extends Activity {
 	
 	private static final int DIALOG_LUNCH_ID = 1;
 	private static final int DIALOG_ABOUT_ID = 0;
-	
-	private final Intent emailIntent;
-	
-	public Home() {
-		emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-    	emailIntent.setType("message/rfc822");
-    	emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"clandim@ciandt.com"});
-    	emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "MWTT");
-    	emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-	}
 	
     /** Called when the activity is first created. */
     @Override
@@ -154,7 +144,7 @@ public class Home extends Activity {
         total = (TextView)findViewById(R.id.total);
         imgLunch = (ImageView)findViewById(R.id.img_lunch_dialog);
         lunchDialog = createLunchDialog();
-		sobreDialog = createSobreDialog();
+		sobreDialog = new AboutDialog(this);
 
         timePicker.setIs24HourView(true);
         checkButton.setOnClickListener(new OnClickListener() {
@@ -253,24 +243,6 @@ public class Home extends Activity {
     	
     	updateDisplayTimeTrack();
 	}
-    
-    private Dialog createSobreDialog(){
-    	Dialog dialog = new Dialog(this);
-    	dialog.setContentView(R.layout.sobre_dialog);
-    	dialog.setTitle("Sobre");
-
-    	TextView text = (TextView) dialog.findViewById(R.id.sobre_text);
-    	text.setAutoLinkMask(Linkify.EMAIL_ADDRESSES);
-    	text.setLinksClickable(false);
-    	text.setText("Desenvolvido por Cássio Landim Ribeiro.\nclandim@ciandt.com.\nTodos os direitos reservados.");
-    	text.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-		    	startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-			}
-		});
-    	return dialog;
-    }
     
     private Dialog createLunchDialog(){
     	final Dialog dialog = new Dialog(this);
