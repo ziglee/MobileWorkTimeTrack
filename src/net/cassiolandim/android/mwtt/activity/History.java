@@ -3,21 +3,31 @@ package net.cassiolandim.android.mwtt.activity;
 import net.cassiolandim.android.mwtt.R;
 import net.cassiolandim.android.mwtt.adapter.HistoryCursorAdapter;
 import net.cassiolandim.android.mwtt.db.MyDbAdapter;
+import net.cassiolandim.android.mwtt.dialog.HistoryRowDialog;
+import net.cassiolandim.android.mwtt.entity.TimeTrack;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 public class History extends ListActivity {
 
 	private MyDbAdapter mDbHelper;
-	private static final int MENU_ITEM_DELETE = 0;
+	
+	private HistoryRowDialog historyRowDialog;
+	
+	private static final int MENU_ITEM_DETAILS = 0;
+	private static final int MENU_ITEM_DELETE = 1;
+	
+	private static final int MENU_DELETE_ALL = 0;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,8 @@ public class History extends ListActivity {
         mDbHelper = new MyDbAdapter(this);
         mDbHelper.open();
         fillData();
+        
+        historyRowDialog = new HistoryRowDialog(this);
     }
 	
 	@Override
@@ -43,10 +55,15 @@ public class History extends ListActivity {
         setListAdapter(notes);
     }
 
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, MENU_DELETE_ALL, 0, "Apagar tudo").setIcon(R.drawable.ic_menu_close_clear_cancel);
+		return true;
+	}
+
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		menu.add(0, MENU_ITEM_DELETE, 0, "Delete");
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		menu.add(0, MENU_ITEM_DETAILS, 0, "Detalhes");
+		menu.add(0, MENU_ITEM_DELETE, 1, "Apagar");
 	}
 	
 	@Override
@@ -54,6 +71,12 @@ public class History extends ListActivity {
 		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		
 		switch(item.getItemId()){
+		case MENU_ITEM_DETAILS:
+			Cursor cursor = mDbHelper.fetchTimeTrack(info.id);
+			final TimeTrack tt = MyDbAdapter.populateTimeTrack(cursor);
+			historyRowDialog.show(tt);
+			cursor.close();
+			break;
 		case MENU_ITEM_DELETE:
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(History.this);
@@ -77,5 +100,24 @@ public class History extends ListActivity {
 		}
 		
 		return super.onContextItemSelected(item);
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case MENU_DELETE_ALL:
+			mDbHelper.deleteAll();
+			fillData();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		Cursor cursor = mDbHelper.fetchTimeTrack(id);
+		final TimeTrack tt = MyDbAdapter.populateTimeTrack(cursor);
+		historyRowDialog.show(tt);
+		cursor.close();
 	}
 }

@@ -18,15 +18,15 @@ public class HistoryCursorAdapter extends ResourceCursorAdapter {
 	@Override
 	public void bindView(final View timeTrackRow, Context context, Cursor cursor) {
         final TextView entryDate = (TextView) timeTrackRow.findViewById(R.id.row_date);
-        TextView checkin = (TextView) timeTrackRow.findViewById(R.id.row_checkin);
-        TextView checkout = (TextView) timeTrackRow.findViewById(R.id.row_checkout);
+//        TextView checkin = (TextView) timeTrackRow.findViewById(R.id.row_checkin);
+//        TextView checkout = (TextView) timeTrackRow.findViewById(R.id.row_checkout);
         TextView total = (TextView) timeTrackRow.findViewById(R.id.row_total);
         
 		final TimeTrack tt = MyDbAdapter.populateTimeTrack(cursor);
         
         entryDate.setText(cursor.getString(1));
-        checkin.setText(tt.getTimeIn());
-        checkout.setText(tt.getTimeOut());
+//        checkin.setText(tt.getTimeIn());
+//        checkout.setText(tt.getTimeOut());
         total.setText(tt.getTimeTotal());
         
         /*

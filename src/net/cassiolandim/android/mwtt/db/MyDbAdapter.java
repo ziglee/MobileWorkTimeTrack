@@ -69,6 +69,10 @@ public class MyDbAdapter {
 		return id;
     }
     
+    public boolean deleteAll() {
+        return mDb.delete(DATABASE_TABLE, null, null) > 0;
+    }
+    
     public boolean deleteTimeTrack(long rowId) {
         return mDb.delete(DATABASE_TABLE, KEY_ROWID + " = " + rowId, null) > 0;
     }

@@ -1,56 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="wrap_content">
     
 	<TextView android:id="@+id/row_date"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    style="@style/MainFont"
-	    android:text="2010-08-16"/>
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:textSize="25dp"
+	    android:textStyle="bold"
+	    android:text="2010-08-16"
+	    android:gravity="center"
+	    android:layout_weight="1"/>
 	    
-    <RelativeLayout android:orientation="horizontal"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@id/row_date">
-	    
-	    <ImageView android:id="@+id/img_checkin" style="@style/SideImage" 
-	       android:src="@drawable/down_48" 
-	       android:paddingRight="5px"
-	       android:maxHeight="23sp"/>
-	    
-	    <TextView android:id="@+id/row_checkin"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        style="@style/MainFont.Value"
-	        android:text="9:00"
-	        android:layout_toRightOf="@id/img_checkin"/>
-	        
-	    <ImageView android:id="@+id/img_checkout" style="@style/SideImage" android:src="@drawable/up_48" 
-	       android:layout_toRightOf="@id/row_checkin"
-	       android:paddingLeft="8px" 
-	       android:paddingRight="5px"
-	       android:maxHeight="23sp"/>
-	    
-        <TextView android:id="@+id/row_checkout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/MainFont.Value"
-            android:text="18:00"
-            android:layout_toRightOf="@id/img_checkout"/>
-            
-        <ImageView android:id="@+id/img_total" style="@style/SideImage" android:src="@drawable/tick_48" 
-           android:layout_toRightOf="@id/row_checkout" 
-           android:paddingLeft="8px"
-           android:paddingRight="5px"
-           android:maxHeight="23sp"/>
-            
-        <TextView android:id="@+id/row_total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/MainFont.Value"
-            android:text="8:00"
-            android:layout_toRightOf="@id/img_total"/>
-    </RelativeLayout>
-</RelativeLayout>
+     <TextView android:id="@+id/row_total"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:text="8:00"
+        android:gravity="center"
+        android:layout_weight="1"/>
+</LinearLayout>
