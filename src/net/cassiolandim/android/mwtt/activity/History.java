@@ -23,6 +23,7 @@ public class History extends ListActivity {
 	private MyDbAdapter mDbHelper;
 	
 	private HistoryRowDialog historyRowDialog;
+	private AlertDialog deleteAllAlertDialog;
 	
 	private static final int MENU_ITEM_DETAILS = 0;
 	private static final int MENU_ITEM_DELETE = 1;
@@ -38,6 +39,22 @@ public class History extends ListActivity {
         mDbHelper.open();
         fillData();
         
+        AlertDialog.Builder builder = new AlertDialog.Builder(History.this);
+		builder.setMessage("Todos os registros serão apagados. Deseja continuar?")
+		       .setCancelable(false)
+		       .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   mDbHelper.deleteAll();
+		        	   fillData();
+		           }
+		       })
+		       .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                dialog.cancel();
+		           }
+		       });
+		deleteAllAlertDialog = builder.create();
+		
         historyRowDialog = new HistoryRowDialog(this);
     }
 	
@@ -80,15 +97,15 @@ public class History extends ListActivity {
 		case MENU_ITEM_DELETE:
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(History.this);
-			builder.setMessage("Are you sure you want to delete?")
+			builder.setMessage("Este registro será apagado. Deseja continuar?")
 			       .setCancelable(false)
-			       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			       .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			        	   mDbHelper.deleteTimeTrack(info.id);
 			        	   fillData();
 			           }
 			       })
-			       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+			       .setNegativeButton("Não", new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			                dialog.cancel();
 			           }
@@ -105,8 +122,7 @@ public class History extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MENU_DELETE_ALL:
-			mDbHelper.deleteAll();
-			fillData();
+			deleteAllAlertDialog.show();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

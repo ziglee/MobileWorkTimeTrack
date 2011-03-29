@@ -29,7 +29,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class Home extends Activity {
 	
@@ -110,7 +109,6 @@ public class Home extends Activity {
         	showDialog(DIALOG_ABOUT_ID);
         	return true;
         case MENU_EXIT:
-        	Toast.makeText(Home.this, "Bye", Toast.LENGTH_SHORT).show();
         	finish();
 	    	return true;
         default:
@@ -178,14 +176,14 @@ public class Home extends Activity {
 		});
         
         AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
-		builder.setMessage("Are you sure you want to reset?")
+		builder.setMessage("O registro de hoje será apagado. Deseja continuar?")
 		       .setCancelable(false)
-		       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		       .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 		        	   resetToCheckin();
 		           }
 		       })
-		       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		       .setNegativeButton("Não", new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 		                dialog.cancel();
 		           }
@@ -281,12 +279,3 @@ public class Home extends Activity {
     	}
     }
 }
-
-/*Cursor timeTracks = mDbHelper.fetchAllTimeTracks();
-timeTracks.moveToFirst();
-while (timeTracks.isAfterLast() == false) {
-	TimeTrack tt = MyDbAdapter.populateTimeTrack(timeTracks);
-	timeTrackList.append("\n" + tt.toString());
-	    timeTracks.moveToNext();
-}
-timeTracks.close();*/
