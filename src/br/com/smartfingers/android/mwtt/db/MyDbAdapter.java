@@ -1,11 +1,12 @@
-package net.cassiolandim.android.mwtt.db;
+package br.com.smartfingers.android.mwtt.db;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import net.cassiolandim.android.mwtt.entity.TimeTrack;
+import br.com.smartfingers.android.mwtt.entity.TimeTrack;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

@@ -1,11 +1,11 @@
-package net.cassiolandim.android.mwtt.dialog;
+package br.com.smartfingers.android.mwtt.dialog;
 
-import net.cassiolandim.android.mwtt.R;
-import net.cassiolandim.android.mwtt.db.MyDbAdapter;
-import net.cassiolandim.android.mwtt.entity.TimeTrack;
 import android.app.Dialog;
 import android.content.Context;
 import android.widget.TextView;
+import br.com.smartfingers.android.mwtt.R;
+import br.com.smartfingers.android.mwtt.db.MyDbAdapter;
+import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
 public class HistoryRowDialog extends Dialog {
 	

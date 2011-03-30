@@ -1,10 +1,5 @@
-package net.cassiolandim.android.mwtt.activity;
+package br.com.smartfingers.android.mwtt.activity;
 
-import net.cassiolandim.android.mwtt.R;
-import net.cassiolandim.android.mwtt.adapter.HistoryCursorAdapter;
-import net.cassiolandim.android.mwtt.db.MyDbAdapter;
-import net.cassiolandim.android.mwtt.dialog.HistoryRowDialog;
-import net.cassiolandim.android.mwtt.entity.TimeTrack;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -17,6 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import br.com.smartfingers.android.mwtt.R;
+import br.com.smartfingers.android.mwtt.adapter.HistoryCursorAdapter;
+import br.com.smartfingers.android.mwtt.db.MyDbAdapter;
+import br.com.smartfingers.android.mwtt.dialog.HistoryRowDialog;
+import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
 public class History extends ListActivity {
 

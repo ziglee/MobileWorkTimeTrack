@@ -1,4 +1,4 @@
-package net.cassiolandim.android.mwtt.activity;
+package br.com.smartfingers.android.mwtt.activity;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,11 +9,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import net.cassiolandim.android.mwtt.R;
-import net.cassiolandim.android.mwtt.db.MyDbAdapter;
-import net.cassiolandim.android.mwtt.dialog.AboutDialog;
-import net.cassiolandim.android.mwtt.dialog.LunchDialog;
-import net.cassiolandim.android.mwtt.entity.TimeTrack;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -29,6 +24,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import br.com.smartfingers.android.mwtt.R;
+import br.com.smartfingers.android.mwtt.db.MyDbAdapter;
+import br.com.smartfingers.android.mwtt.dialog.AboutDialog;
+import br.com.smartfingers.android.mwtt.dialog.LunchDialog;
+import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
 public class Home extends Activity {
 	

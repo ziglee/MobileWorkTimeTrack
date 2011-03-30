@@ -1,13 +1,13 @@
-package net.cassiolandim.android.mwtt.adapter;
+package br.com.smartfingers.android.mwtt.adapter;
 
-import net.cassiolandim.android.mwtt.R;
-import net.cassiolandim.android.mwtt.db.MyDbAdapter;
-import net.cassiolandim.android.mwtt.entity.TimeTrack;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+import br.com.smartfingers.android.mwtt.R;
+import br.com.smartfingers.android.mwtt.db.MyDbAdapter;
+import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
 public class HistoryCursorAdapter extends ResourceCursorAdapter {
 

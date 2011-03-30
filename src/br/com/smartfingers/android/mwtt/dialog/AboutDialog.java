@@ -1,6 +1,6 @@
-package net.cassiolandim.android.mwtt.dialog;
+package br.com.smartfingers.android.mwtt.dialog;
 
-import net.cassiolandim.android.mwtt.R;
+import br.com.smartfingers.android.mwtt.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +27,7 @@ public class AboutDialog extends Dialog {
     	TextView text = (TextView) findViewById(R.id.sobre_text);
     	text.setAutoLinkMask(Linkify.EMAIL_ADDRESSES);
     	text.setLinksClickable(false);
-    	text.setText("Desenvolvido por Cássio Landim Ribeiro.\nziglee@gmail.com.\nTodos os direitos reservados.");
+    	text.setText("Desenvolvido por Smartfingers e smk-inc.net.\nTodos os direitos reservados.");
     	text.setOnClickListener(new TextView.OnClickListener() {
 			@Override
 			public void onClick(View v) {

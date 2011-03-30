@@ -1,11 +1,11 @@
-package net.cassiolandim.android.mwtt.dialog;
+package br.com.smartfingers.android.mwtt.dialog;
 
-import net.cassiolandim.android.mwtt.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
+import br.com.smartfingers.android.mwtt.R;
 
 public class LunchDialog extends Dialog {
 

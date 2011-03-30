@@ -1,4 +1,4 @@
-package net.cassiolandim.android.mwtt.entity;
+package br.com.smartfingers.android.mwtt.entity;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
