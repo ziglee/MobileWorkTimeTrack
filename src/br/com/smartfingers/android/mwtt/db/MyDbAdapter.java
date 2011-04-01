@@ -5,15 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import br.com.smartfingers.android.mwtt.entity.TimeTrack;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
 public class MyDbAdapter {
 
@@ -34,7 +32,7 @@ public class MyDbAdapter {
             KEY_HOUR_LUNCH, KEY_MINUTE_LUNCH}; 
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private static final String TAG = "MyDbAdapter";
+//    private static final String TAG = "MyDbAdapter";
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
 
@@ -178,11 +176,11 @@ public class MyDbAdapter {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-                    + newVersion + ", which will destroy all old data");
-            
-            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
-            onCreate(db);
+//            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+//                    + newVersion + ", which will destroy all old data");
+//            
+//            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+//            onCreate(db);
         }
     }
 }
