@@ -4,10 +4,12 @@
     <solid 
         android:color="#EE777777"/>
     <stroke android:width="2sp" 
-        android:color="#BBBBBB"/>
-    <padding android:left="5sp" 
-        android:top="5sp"
-        android:right="5sp" 
-        android:bottom="5sp" />
+        android:color="#BBBBBB" 
+        android:dashGap="2dp" 
+        android:dashWidth="2dp"/>
     <corners android:radius="8sp" />
+    <padding android:left="4sp" 
+        android:top="3sp"
+        android:right="6sp" 
+        android:bottom="3sp" />
 </shape>

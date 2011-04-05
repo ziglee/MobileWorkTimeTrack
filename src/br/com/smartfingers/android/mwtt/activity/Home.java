@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import br.com.smartfingers.android.mwtt.R;
@@ -39,7 +39,7 @@ public class Home extends Activity {
 	private TimePicker timePicker;
 	private Button checkButton;
 	private Button resetButton;
-	private ImageView imgLunch;
+	private LinearLayout imgLunch;
 	private TextView horarioEntrada;
 	private TextView horarioSaida;
 	private TextView almoco;
@@ -50,6 +50,7 @@ public class Home extends Activity {
 	private static final int MENU_HISTORY = 1;
 	private static final int MENU_ABOUT = 2;
 	private static final int MENU_EXIT = 3;
+	private static final int MENU_DONATION = 4;
 	
 	private static final int DIALOG_LUNCH_ID = 1;
 	private static final int DIALOG_ABOUT_ID = 0;
@@ -95,7 +96,8 @@ public class Home extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_HISTORY, 0, "Histórico").setIcon(R.drawable.ic_menu_view);
 	    menu.add(0, MENU_ABOUT, 1, "Sobre").setIcon(R.drawable.ic_menu_info_details);
-	    menu.add(0, MENU_EXIT, 2, "Sair").setIcon(R.drawable.ic_menu_close_clear_cancel);
+	    menu.add(0, MENU_DONATION, 2, "Doar").setIcon(R.drawable.ic_menu_allfriends);
+	    menu.add(0, MENU_EXIT, 3, "Sair").setIcon(R.drawable.ic_menu_close_clear_cancel);
 	    return true;
 	}
     
@@ -107,6 +109,8 @@ public class Home extends Activity {
         	return true;
         case MENU_ABOUT:
         	showDialog(DIALOG_ABOUT_ID);
+        	return true;
+        case MENU_DONATION:
         	return true;
         case MENU_EXIT:
         	finish();
@@ -140,7 +144,7 @@ public class Home extends Activity {
         horarioSaida = (TextView)findViewById(R.id.horario_saida);
         almoco = (TextView)findViewById(R.id.almoco);
         total = (TextView)findViewById(R.id.total);
-        imgLunch = (ImageView)findViewById(R.id.img_lunch_dialog);
+        imgLunch = (LinearLayout)findViewById(R.id.img_lunch_dialog);
         lunchDialog = new LunchDialog(this);
 		sobreDialog = new AboutDialog(this);
 		
