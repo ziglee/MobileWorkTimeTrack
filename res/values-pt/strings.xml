@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WorkTimeTrack</string>
+    <string name="in_label">Entrada:</string>
+    <string name="out_label">Saída:</string>
+    <string name="lunch_label">Almoço:</string>
+    <string name="total_label">Total:</string>
+    <string name="history_menu">Histórico</string>
+    <string name="about_menu">Sobre</string>
+    <string name="donate_menu">Doar</string>
+    <string name="exit_menu">Sair</string>
+    <string name="billing_not_supported_title">Não é possível fazer compras</string>
+    <string name="billing_not_supported_message">O serviço de pagamento do Market
+     não está disponível no momento. Você pode continuar usando esta aplicação
+     mas não poderá fazer doações.</string>
+    <string name="cannot_connect_title">Não foi possível conectar ao Market</string>
+    <string name="cannot_connect_message">Esta aplicação não conseguiu conectar ao Market.
+     Sua versão do Market pode estar desatualizada.
+     Você pode continuar utilizando esta aplicação
+     mas não poderá fazer doações.</string>
+    <string name="donation_thanks_title">Muito obrigado!</string>
+    <string name="donation_thanks_message">Obrigado por doar e ajudar a apoiar este projeto.
+     Agora podemos continuar melhorando-o!</string>
+    <string name="learn_more">Saiba mais</string>
+    <string name="help_url" formatted="false">http://market.android.com/support/bin/answer.py?answer=1050566&amp;hl=%lang%&amp;dl=%region%</string>
+    <string name="reset_alert_dialog">O registro de hoje será apagado. Deseja continuar?</string>
+    <string name="lunch_dialog_title">Tempo de Almoço:</string>
+    <string name="cancel">Cancelar</string>
+    <string name="no_data">Sem dados</string>
+    <string name="about_text">Desenvolvido por Smartfingers e smk-inc.net.\nTodos os direitos reservados.</string>
+    <string name="details_context_menu">Detalhes</string>
+    <string name="edit_context_menu">Editar</string>
+    <string name="delete_context_menu">Excluir</string>
+    <string name="delete_all_menu">Excluir tudo</string>
+    <string name="delete_all_alert_dialog">Todos os registros serão apagados. Deseja continuar?</string>
+    <string name="delete_alert_dialog">Este registro será apagado. Deseja continuar?</string>
+    <string name="saved_success_toast">Registro salvo com sucesso.</string>
+    <string name="save_button">Salvar</string>
+</resources>

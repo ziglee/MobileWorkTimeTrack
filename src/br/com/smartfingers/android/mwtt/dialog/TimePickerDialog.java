@@ -7,24 +7,24 @@ import android.widget.Button;
 import android.widget.TimePicker;
 import br.com.smartfingers.android.mwtt.R;
 
-public class LunchDialog extends Dialog {
+public class TimePickerDialog extends Dialog {
 
 	private final Button ok;
-	private final TimePicker lunchPicker;
+	private final TimePicker timePicker;
 	
-	public LunchDialog(Context context) {
+	public TimePickerDialog(Context context) {
 		super(context);
 		
 		setContentView(R.layout.lunch_dialog);
-    	setTitle("Tempo de Almoço:");
+    	setTitle(R.string.lunch_dialog_title);
     	
-    	lunchPicker = (TimePicker) findViewById(R.id.lunch_picker);
+    	timePicker = (TimePicker) findViewById(R.id.lunch_picker);
     	ok = (Button) findViewById(R.id.lunch_ok);
     	Button cancel = (Button) findViewById(R.id.lunch_cancel);
     	
-    	lunchPicker.setIs24HourView(true);
-    	lunchPicker.setCurrentHour(1);
-    	lunchPicker.setCurrentMinute(0);
+    	timePicker.setIs24HourView(true);
+    	timePicker.setCurrentHour(1);
+    	timePicker.setCurrentMinute(0);
     	
     	cancel.setOnClickListener(new Button.OnClickListener() {
 			@Override
@@ -39,10 +39,18 @@ public class LunchDialog extends Dialog {
 	}
 	
 	public Integer getCurrentHour(){
-		return lunchPicker.getCurrentHour();
+		return timePicker.getCurrentHour();
 	}
 	
 	public Integer getCurrentMinute(){
-		return lunchPicker.getCurrentMinute();
+		return timePicker.getCurrentMinute();
+	}
+	
+	public void setCurrentHour(Integer hour){
+		timePicker.setCurrentHour(hour);
+	}
+	
+	public void setCurrentMinute(Integer minute){
+		timePicker.setCurrentMinute(minute);
 	}
 }

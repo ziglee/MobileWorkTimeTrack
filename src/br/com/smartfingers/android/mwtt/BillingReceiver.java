@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package br.com.smartfingers.android.mwtt.receiver;
-
-import br.com.smartfingers.android.dungeons.Consts.ResponseCode;
+package br.com.smartfingers.android.mwtt;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import br.com.smartfingers.android.mwtt.Consts.ResponseCode;
 
 /**
  * This class implements the broadcast receiver for in-app billing. All asynchronous messages from

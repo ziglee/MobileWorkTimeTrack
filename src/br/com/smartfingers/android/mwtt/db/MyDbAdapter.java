@@ -109,7 +109,7 @@ public class MyDbAdapter {
         return tt;
     }
     
-    public boolean updateTimeTrack(TimeTrack tt) {
+    public boolean updateTimeTrackLunch(TimeTrack tt) {
     	TimeTrack temp = fetchTodayTimeTrack();
     	
     	if(temp != null){
@@ -121,6 +121,18 @@ public class MyDbAdapter {
     	}
         
         return false;
+    }
+    
+    public boolean updateTimeTrack(TimeTrack tt) {
+        ContentValues args = new ContentValues();
+        args.put(KEY_HOUR_IN, tt.hourIn);
+        args.put(KEY_MINUTE_IN, tt.minuteIn);
+        args.put(KEY_HOUR_OUT, tt.hourOut);
+        args.put(KEY_MINUTE_OUT, tt.minuteOut);
+        args.put(KEY_HOUR_LUNCH, tt.hourLunch);
+        args.put(KEY_MINUTE_LUNCH, tt.minuteLunch);
+
+        return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + tt.id, null) > 0;
     }
     
     public static TimeTrack populateTimeTrack(Cursor cursor){

@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WorkTimeTrack</string>
-    <string name="in_label">Entrada:</string>
-    <string name="out_label">Saída:</string>
-    <string name="lunch_label">Almoço:</string>
+    <string name="in_label">Checkin:</string>
+    <string name="out_label">Checkout:</string>
+    <string name="lunch_label">Lunch:</string>
     <string name="total_label">Total:</string>
+    <string name="history_menu">History</string>
+    <string name="about_menu">About</string>
+    <string name="donate_menu">Donate</string>
+    <string name="exit_menu">Exit</string>
+    <string name="billing_not_supported_title">Can\'t make purchases</string>
+    <string name="billing_not_supported_message">The Market billing
+     service is not available at this time.  You can continue to use this app but you
+     won\'t be able to make purchases.</string>
+    <string name="cannot_connect_title">Can\'t connect to Market</string>
+    <string name="cannot_connect_message">This app cannot connect to Market.
+     Your version of Market may be out of date.
+     You can continue to use this app but you
+     won\'t be able to make purchases.</string>
+    <string name="donation_thanks_title">Thank you very much!</string>
+    <string name="donation_thanks_message">Thank you for donating and supporting this project.
+     Now we can keep improving it!</string>
+    <string name="learn_more">Learn more</string>
+    <string name="help_url" formatted="false">http://market.android.com/support/bin/answer.py?answer=1050566&amp;hl=%lang%&amp;dl=%region%</string>
+    <string name="reset_alert_dialog">Today record will be deleted. Do you want to proceed?</string>
+    <string name="lunch_dialog_title">Lunch time:</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_data">No data</string>
+    <string name="about_text">Develped by Smartfingers and smk-inc.net.\nAll rights reserved.</string>
+    <string name="details_context_menu">Details</string>
+    <string name="edit_context_menu">Edit</string>
+    <string name="delete_context_menu">Delete</string>
+    <string name="delete_all_menu">Delete all</string>
+    <string name="delete_all_alert_dialog">All records will be deleted. Do you want to proceed?</string>
+    <string name="delete_alert_dialog">This record will be deleted. Do you want to proceed?</string>
+    <string name="saved_success_toast">Record saved successfully.</string>
+    <string name="save_button">Save</string>
 </resources>

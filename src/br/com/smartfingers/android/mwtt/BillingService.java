@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.com.smartfingers.android.mwtt.service;
+package br.com.smartfingers.android.mwtt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,12 +30,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import br.com.smartfingers.android.mwtt.Consts;
 import br.com.smartfingers.android.mwtt.Consts.PurchaseState;
 import br.com.smartfingers.android.mwtt.Consts.ResponseCode;
-import br.com.smartfingers.android.mwtt.Security;
 import br.com.smartfingers.android.mwtt.Security.VerifiedPurchase;
-import br.com.smartfingers.android.mwtt.receiver.BillingReceiver;
 
 import com.android.vending.billing.IMarketBillingService;
 
@@ -205,31 +202,22 @@ public class BillingService extends Service implements ServiceConnection {
     /**
      * Wrapper class that requests a purchase.
      */
-    class RequestPurchase extends BillingRequest {
+    public class RequestPurchase extends BillingRequest {
         public final String mProductId;
-        public final String mDeveloperPayload;
 
         public RequestPurchase(String itemId) {
-            this(itemId, null);
-        }
-
-        public RequestPurchase(String itemId, String developerPayload) {
             // This object is never created as a side effect of starting this
             // service so we pass -1 as the startId to indicate that we should
             // not stop this service after executing this request.
             super(-1);
             mProductId = itemId;
-            mDeveloperPayload = developerPayload;
         }
 
         @Override
         protected long run() throws RemoteException {
             Bundle request = makeRequestBundle("REQUEST_PURCHASE");
             request.putString(Consts.BILLING_REQUEST_ITEM_ID, mProductId);
-            // Note that the developer payload is optional.
-            if (mDeveloperPayload != null) {
-                request.putString(Consts.BILLING_REQUEST_DEVELOPER_PAYLOAD, mDeveloperPayload);
-            }
+
             Bundle response = mService.sendBillingRequest(request);
             PendingIntent pendingIntent
                     = response.getParcelable(Consts.BILLING_RESPONSE_PURCHASE_INTENT);
@@ -307,7 +295,7 @@ public class BillingService extends Service implements ServiceConnection {
     /**
      * Wrapper class that sends a RESTORE_TRANSACTIONS message to the server.
      */
-    class RestoreTransactions extends BillingRequest {
+    public class RestoreTransactions extends BillingRequest {
         long mNonce;
 
         public RestoreTransactions() {
@@ -436,8 +424,8 @@ public class BillingService extends Service implements ServiceConnection {
      * purchase, if null, no payload is sent
      * @return false if there was an error connecting to Android Market
      */
-    public boolean requestPurchase(String productId, String developerPayload) {
-        return new RequestPurchase(productId, developerPayload).runRequest();
+    public boolean requestPurchase(String productId) {
+        return new RequestPurchase(productId).runRequest();
     }
 
     /**

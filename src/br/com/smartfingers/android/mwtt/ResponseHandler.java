@@ -1,18 +1,15 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 
-package br.com.smartfingers.android.mwtt.service;
+package br.com.smartfingers.android.mwtt;
 
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import br.com.smartfingers.android.mwtt.Consts;
+import br.com.smartfingers.android.mwtt.BillingService.RequestPurchase;
+import br.com.smartfingers.android.mwtt.BillingService.RestoreTransactions;
 import br.com.smartfingers.android.mwtt.Consts.PurchaseState;
 import br.com.smartfingers.android.mwtt.Consts.ResponseCode;
-import br.com.smartfingers.android.mwtt.Security;
-import br.com.smartfingers.android.mwtt.receiver.BillingReceiver;
-import br.com.smartfingers.android.mwtt.service.BillingService.RequestPurchase;
-import br.com.smartfingers.android.mwtt.service.BillingService.RestoreTransactions;
 
 /**
  * This class contains the methods that handle responses from Android Market.  The
@@ -113,17 +110,17 @@ public class ResponseHandler {
         // first.
         new Thread(new Runnable() {
             public void run() {
-                PurchaseDatabase db = new PurchaseDatabase(context);
-                int quantity = db.updatePurchase(
-                        orderId, productId, purchaseState, purchaseTime, developerPayload);
-                db.close();
+//                PurchaseDatabase db = new PurchaseDatabase(context);
+//                int quantity = db.updatePurchase(
+//                        orderId, productId, purchaseState, purchaseTime, developerPayload);
+//                db.close();
 
                 // This needs to be synchronized because the UI thread can change the
                 // value of sPurchaseObserver.
                 synchronized(ResponseHandler.class) {
                     if (sPurchaseObserver != null) {
                         sPurchaseObserver.postPurchaseStateChange(
-                                purchaseState, productId, quantity, purchaseTime, developerPayload);
+                                purchaseState, productId, 0, purchaseTime, developerPayload);
                     }
                 }
             }

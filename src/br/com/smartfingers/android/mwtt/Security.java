@@ -21,7 +21,6 @@ import org.json.JSONObject;
 import android.text.TextUtils;
 import android.util.Log;
 import br.com.smartfingers.android.mwtt.Consts.PurchaseState;
-import br.com.smartfingers.android.mwtt.receiver.BillingReceiver;
 import br.com.smartfingers.android.mwtt.util.Base64;
 import br.com.smartfingers.android.mwtt.util.Base64DecoderException;
 

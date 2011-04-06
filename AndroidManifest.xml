@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionCode="8" 
+      android:versionCode="9" 
       android:versionName="1.4" 
       package="br.com.smartfingers.android.mwtt">
     
@@ -16,10 +16,11 @@
         </activity>
         
         <activity android:name=".activity.History" />
+        <activity android:name=".activity.Edit" />
         
-        <service android:name=".service.BillingService" />
+        <service android:name="BillingService" />
 
-        <receiver android:name=".receiver.BillingReceiver">
+        <receiver android:name="BillingReceiver">
             <intent-filter>
                 <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
                 <action android:name="com.android.vending.billing.RESPONSE_CODE" />

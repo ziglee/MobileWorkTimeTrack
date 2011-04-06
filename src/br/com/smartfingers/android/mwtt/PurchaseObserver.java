@@ -1,6 +1,6 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 
-package br.com.smartfingers.android.mwtt.service;
+package br.com.smartfingers.android.mwtt;
 
 import java.lang.reflect.Method;
 
@@ -12,10 +12,10 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Handler;
 import android.util.Log;
+import br.com.smartfingers.android.mwtt.BillingService.RequestPurchase;
+import br.com.smartfingers.android.mwtt.BillingService.RestoreTransactions;
 import br.com.smartfingers.android.mwtt.Consts.PurchaseState;
 import br.com.smartfingers.android.mwtt.Consts.ResponseCode;
-import br.com.smartfingers.android.mwtt.service.BillingService.RequestPurchase;
-import br.com.smartfingers.android.mwtt.service.BillingService.RestoreTransactions;
 
 /**
  * An interface for observing changes related to purchases. The main application
