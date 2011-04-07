@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionCode="9" 
-      android:versionName="1.4" 
+      android:versionCode="10" 
+      android:versionName="1.5" 
       package="br.com.smartfingers.android.mwtt">
     
     <uses-permission android:name="com.android.vending.BILLING" />
@@ -35,5 +35,5 @@
         android:largeScreens="true"
         android:anyDensity="true" />
     
-    <uses-sdk android:minSdkVersion="3" />
+    <uses-sdk android:minSdkVersion="6" />
 </manifest> 

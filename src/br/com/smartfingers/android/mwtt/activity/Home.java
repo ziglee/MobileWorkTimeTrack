@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -16,6 +17,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +44,11 @@ import br.com.smartfingers.android.mwtt.dialog.AboutDialog;
 import br.com.smartfingers.android.mwtt.dialog.TimePickerDialog;
 import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
+import com.androidplot.series.XYSeries;
+import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.XYPlot;
+
 public class Home extends Activity {
 	
 	public static final String LOG_TAG = "MobileWorkTimeTrack";
@@ -56,6 +63,7 @@ public class Home extends Activity {
 	private TextView horarioSaida;
 	private TextView almoco;
 	private TextView total;
+	private XYPlot homeChart;
 	
 	private TimeTrack tt;
 	private MyDbAdapter mDbHelper;
@@ -246,6 +254,7 @@ public class Home extends Activity {
         almoco = (TextView)findViewById(R.id.almoco);
         total = (TextView)findViewById(R.id.total);
         lunchLayout = (LinearLayout)findViewById(R.id.img_lunch_dialog);
+		homeChart = (XYPlot) findViewById(R.id.home_chart);
         timerPickerDialog = new TimePickerDialog(this);
 		sobreDialog = new AboutDialog(this);
 		
@@ -279,7 +288,7 @@ public class Home extends Activity {
 		        updateDisplayTimeTrack();
 			}
 		});
-        
+        	
         AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
 		builder.setMessage(R.string.reset_alert_dialog)
 		       .setCancelable(false)
@@ -308,6 +317,29 @@ public class Home extends Activity {
 				showDialog(DIALOG_LUNCH_ID);
 			}
 		});
+        
+        Number[] series1Numbers = {1, 8, 5, 2, 7};
+        Number[] years = {
+                978307200,  // 2001
+                1009843200, // 2002
+                1041379200, // 2003
+                1072915200, // 2004
+                1104537600  // 2005
+        };
+
+        XYSeries series1 = new SimpleXYSeries(
+                Arrays.asList(series1Numbers),
+                Arrays.asList(years),
+                "Dias");
+ 
+        LineAndPointFormatter series1Format = new LineAndPointFormatter(
+                Color.rgb(0, 200, 0),                   // line color
+                Color.rgb(0, 100, 0),                  // point color
+                null);
+ 
+        homeChart.addSeries(series1, series1Format);
+        homeChart.setTicksPerRangeLabel(3);
+        homeChart.disableAllMarkup();
 	}
 	
 	private void loadPendingTimeTrack(){
