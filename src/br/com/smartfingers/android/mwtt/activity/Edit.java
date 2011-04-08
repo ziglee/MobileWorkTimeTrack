@@ -147,6 +147,6 @@ public class Edit extends Activity {
     	inText.setText(tt.getTimeIn());
     	lunchText.setText(tt.getTimeLunch());
 		outText.setText(tt.getTimeOut());
-		totalText.setText(tt.getTimeTotal());
+		totalText.setText(tt.getTimeTotalFormated());
     }
 }

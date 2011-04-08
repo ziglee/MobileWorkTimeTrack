@@ -27,7 +27,7 @@ public class HistoryCursorAdapter extends ResourceCursorAdapter {
         entryDate.setText(cursor.getString(1));
 //        checkin.setText(tt.getTimeIn());
 //        checkout.setText(tt.getTimeOut());
-        total.setText(tt.getTimeTotal());
+        total.setText(tt.getTimeTotalFormated());
         
         /*
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

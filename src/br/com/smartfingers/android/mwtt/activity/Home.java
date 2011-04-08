@@ -5,6 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +22,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +55,7 @@ import com.androidplot.series.XYSeries;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
+import com.androidplot.xy.XYStepMode;
 
 public class Home extends Activity {
 	
@@ -91,6 +100,7 @@ public class Home extends Activity {
         setupWidgets();
         loadPendingTimeTrack();
         updateDisplayTimeTrack();
+        plotChart();
         
         mHandler = new Handler();
         mPurchaseObserver = new MyPurchaseObserver(mHandler);
@@ -310,31 +320,96 @@ public class Home extends Activity {
 				showDialog(DIALOG_LUNCH_ID);
 			}
 		});
-        
-        Number[] series1Numbers = {1, 8, 5, 2, 7};
-        Number[] years = {
-                978307200,  // 2001
-                1009843200, // 2002
-                1041379200, // 2003
-                1072915200, // 2004
-                1104537600  // 2005
-        };
+	}
 
-        XYSeries series1 = new SimpleXYSeries(
-                Arrays.asList(series1Numbers),
-                Arrays.asList(years),
-                "Dias");
+	private void plotChart() {
+		Long[] hours = new Long[7];
+		Long[] days = new Long[7];
+		
+		Calendar date = Calendar.getInstance();
+		date.set(Calendar.HOUR_OF_DAY, 0);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
+		date.add(Calendar.DAY_OF_YEAR, 1);
+		
+		for(int x = 6; x >= 0; x--){
+			date.add(Calendar.DAY_OF_YEAR, -1);
+			TimeTrack tt = mDbHelper.fetchTimeTrack(date.getTime());
+			days[x] = date.getTimeInMillis();
+			hours[x] = tt != null ? tt.getTimeTotalInMilliseconds() : 0;
+		}
+		
+        // create our series from our array of nums:
+        XYSeries series = new SimpleXYSeries(
+                Arrays.asList(days),
+                Arrays.asList(hours),
+                "Horas por Dia");
  
-        LineAndPointFormatter series1Format = new LineAndPointFormatter(
-                Color.rgb(0, 200, 0),                   // line color
-                Color.rgb(0, 100, 0),                  // point color
-                null);
+        homeChart.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
+        homeChart.getGraphWidget().getGridLinePaint().setColor(Color.BLACK);
+        homeChart.getGraphWidget().getGridLinePaint().setPathEffect(new DashPathEffect(new float[]{1,1}, 1));
+        homeChart.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);
+        homeChart.getGraphWidget().getRangeOriginLinePaint().setColor(Color.BLACK);
  
-        homeChart.addSeries(series1, series1Format);
-        homeChart.setTicksPerRangeLabel(3);
+        //homeChart.setBorderStyle(Plot.BorderStyle.SQUARE, null, null);
+        homeChart.getBorderPaint().setStrokeWidth(2);
+        homeChart.getBorderPaint().setAntiAlias(false);
+        homeChart.getBorderPaint().setColor(Color.GRAY);
+ 
+        // setup our line fill paint to be a slightly transparent gradient:
+        Paint lineFill = new Paint();
+        lineFill.setAlpha(200);
+        lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.GREEN, Shader.TileMode.MIRROR));
+ 
+        LineAndPointFormatter formatter  = new LineAndPointFormatter(Color.rgb(0, 0,0), Color.BLUE, Color.RED);
+        formatter.setFillPaint(lineFill);
+        homeChart.getGraphWidget().setPaddingRight(2);
+        homeChart.addSeries(series, formatter);
+ 
+        // draw a domain tick for each day:
+        homeChart.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 24*60*60*1000);
+ 
+        // customize our domain/range labels
+        homeChart.setDomainLabel("Dia");
+        homeChart.setRangeLabel("Horas");
+ 
+        homeChart.setRangeValueFormat(new Format() {
+            @Override
+            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+                long timestamp = ((Number) obj).longValue();
+                long totalMinutes = (timestamp / 60 / 1000);
+                long totalHours = totalMinutes / 60;
+        		totalMinutes = totalMinutes % 60;
+                return new StringBuffer(TimeTrack.nf.format(totalHours) + ":" + TimeTrack.nf.format(totalMinutes));
+            }
+ 
+            @Override
+            public Object parseObject(String source, ParsePosition pos) {
+                return null;
+            }
+        });
+ 
+        homeChart.setDomainValueFormat(new Format() {
+            private SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
+ 
+            @Override
+            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+                long timestamp = ((Number) obj).longValue();
+                Date date = new Date(timestamp);
+    			System.out.println(date);
+                return new StringBuffer(dateFormat.format(date));
+            }
+ 
+            @Override
+            public Object parseObject(String source, ParsePosition pos) {
+                return null;
+            }
+        });
+ 
         homeChart.disableAllMarkup();
 	}
-	
+
 	private void loadPendingTimeTrack(){
 		tt = loadTimeTrackFromFile();
     	if(tt == null) tt = mDbHelper.fetchTodayTimeTrack();
@@ -390,7 +465,7 @@ public class Home extends Activity {
 	    	
 	    	if(tt.hourOut != null){
 	    		horarioSaida.setText(tt.getTimeOut());
-	    		total.setText(tt.getTimeTotal());
+	    		total.setText(tt.getTimeTotalFormated());
 	    		
 	        	checkButton.setText("Checkout");
 	        	checkButton.setEnabled(false);

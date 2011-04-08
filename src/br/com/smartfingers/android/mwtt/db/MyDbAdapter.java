@@ -3,6 +3,7 @@ package br.com.smartfingers.android.mwtt.db;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.content.ContentValues;
@@ -84,6 +85,10 @@ public class MyDbAdapter {
         return mDb.query(DATABASE_TABLE, columns, null, null, null, null, KEY_ENTRY_DATE + " desc");
     }
     
+    public Cursor fetchLimitedTimeTracks(int limit) {
+    	return mDb.query(DATABASE_TABLE, columns, null, null, null, null, KEY_ENTRY_DATE + " desc", Integer.toString(limit));
+    }
+    
     public Cursor fetchTimeTrack(long rowId) throws SQLException {
         String selection = KEY_ROWID + "=" + rowId;
 		Cursor mCursor = mDb.query(DATABASE_TABLE, columns, selection, null, 
@@ -93,6 +98,20 @@ public class MyDbAdapter {
         }
         
         return mCursor;
+    }
+    
+    public TimeTrack fetchTimeTrack(Date date) throws SQLException {
+        String selection = KEY_ENTRY_DATE + "= ?";
+		Cursor mCursor = mDb.query(DATABASE_TABLE, columns, selection, new String[]{sdf.format(date)}, 
+				null, null, KEY_ENTRY_DATE + " desc");
+		TimeTrack tt = null;
+        if (mCursor.getCount() > 0) {
+            mCursor.moveToFirst();
+            tt = populateTimeTrack(mCursor);
+        }
+        mCursor.close();
+        
+        return tt;
     }
     
     public TimeTrack fetchTodayTimeTrack() throws SQLException {
@@ -105,6 +124,7 @@ public class MyDbAdapter {
             mCursor.moveToFirst();
             tt = populateTimeTrack(mCursor);
         }
+        mCursor.close();
         
         return tt;
     }

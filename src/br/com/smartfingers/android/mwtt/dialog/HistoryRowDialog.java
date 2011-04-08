@@ -29,7 +29,7 @@ public class HistoryRowDialog extends Dialog {
 		entrada.setText(tt.getTimeIn());
 		saida.setText(tt.getTimeOut());
 		almoco.setText(tt.getTimeLunch());
-		total.setText(tt.getTimeTotal());
+		total.setText(tt.getTimeTotalFormated());
 		super.show();
 	}
 }

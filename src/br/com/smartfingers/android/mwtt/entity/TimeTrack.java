@@ -11,7 +11,7 @@ public class TimeTrack implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-	private static final NumberFormat nf;
+	public static final NumberFormat nf;
 	public static final String FILENAME = "timeTrack.obj";
 	
 	static{
@@ -57,17 +57,22 @@ public class TimeTrack implements Serializable {
 		return nf.format(hourLunch) + ":" + nf.format(minuteLunch);
 	}
 	
-	public String getTimeTotal(){
-		int totalMinutesIn = (hourIn * 60) + minuteIn;
-		int totalMinutesOut = (hourOut * 60) + minuteOut;
-		int totalMinutesLunch = 0;
+	public long getTimeTotalInMilliseconds(){
+		long totalMinutesIn = (hourIn * 60) + minuteIn;
+		long totalMinutesOut = (hourOut * 60) + minuteOut;
+		long totalMinutesLunch = 0;
 		
 		if(hourLunch != null){
 			totalMinutesLunch = (hourLunch * 60) + minuteLunch;
 		}
 		
-		int totalMinutes = totalMinutesOut - (totalMinutesIn + totalMinutesLunch);
-		int totalHours = totalMinutes / 60;
+		long totalMinutes = totalMinutesOut - (totalMinutesIn + totalMinutesLunch);
+		return totalMinutes * 60 * 1000;
+	}
+	
+	public String getTimeTotalFormated(){
+		long totalMinutes = (getTimeTotalInMilliseconds() / 60 / 1000);
+		long totalHours = totalMinutes / 60;
 		totalMinutes = totalMinutes % 60;
 		
 		return nf.format(totalHours) + ":" + nf.format(totalMinutes);
