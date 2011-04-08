@@ -27,7 +27,7 @@
     <string name="lunch_dialog_title">Lunch time:</string>
     <string name="cancel">Cancel</string>
     <string name="no_data">No data</string>
-    <string name="about_text">Develped by Smartfingers and smk-inc.net.\nAll rights reserved.</string>
+    <string name="about_text">Developed by <a href="http://http://smartfingersinc.wordpress.com/">Smartfingers</a> and <a href="http://smk-inc.net/">smk-inc.net</a>.\nAll rights reserved.</string>
     <string name="details_context_menu">Details</string>
     <string name="edit_context_menu">Edit</string>
     <string name="delete_context_menu">Delete</string>
@@ -36,4 +36,6 @@
     <string name="delete_alert_dialog">This record will be deleted. Do you want to proceed?</string>
     <string name="saved_success_toast">Record saved successfully.</string>
     <string name="save_button">Save</string>
+    <string name="whats_new_tab_title">What\'s new</string>
+    <string name="credits_tab_title">Credits</string>
 </resources>

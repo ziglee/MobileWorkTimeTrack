@@ -36,4 +36,6 @@
     <string name="delete_alert_dialog">Este registro será apagado. Deseja continuar?</string>
     <string name="saved_success_toast">Registro salvo com sucesso.</string>
     <string name="save_button">Salvar</string>
+    <string name="whats_new_tab_title">Novidades</string>
+    <string name="credits_tab_title">Créditos</string>
 </resources>

@@ -17,6 +17,10 @@
         
         <activity android:name=".activity.History" />
         <activity android:name=".activity.Edit" />
+        <activity android:name=".activity.AboutTabHost" />
+        <activity android:name=".activity.About" />
+        <activity android:name=".activity.WhatsNew" />
+        <activity android:name=".activity.Credits" />
         
         <service android:name="BillingService" />
 

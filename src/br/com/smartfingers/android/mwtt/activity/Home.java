@@ -40,7 +40,6 @@ import br.com.smartfingers.android.mwtt.PurchaseObserver;
 import br.com.smartfingers.android.mwtt.R;
 import br.com.smartfingers.android.mwtt.ResponseHandler;
 import br.com.smartfingers.android.mwtt.db.MyDbAdapter;
-import br.com.smartfingers.android.mwtt.dialog.AboutDialog;
 import br.com.smartfingers.android.mwtt.dialog.TimePickerDialog;
 import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
@@ -54,7 +53,6 @@ public class Home extends Activity {
 	public static final String LOG_TAG = "MobileWorkTimeTrack";
 	
 	private TimePickerDialog timerPickerDialog;
-	private AboutDialog sobreDialog;
 	private TimePicker timePicker;
 	private Button checkButton;
 	private Button resetButton;
@@ -76,7 +74,6 @@ public class Home extends Activity {
 	private static final int MENU_EXIT = 3;
 	private static final int MENU_DONATION = 4;
 	
-	private static final int DIALOG_ABOUT_ID = 0;
 	private static final int DIALOG_LUNCH_ID = 1;
     private static final int DIALOG_CANNOT_CONNECT_ID = 2;
     private static final int DIALOG_BILLING_NOT_SUPPORTED_ID = 3;
@@ -165,7 +162,7 @@ public class Home extends Activity {
         	startActivity(new Intent(this, History.class));
         	return true;
         case MENU_ABOUT:
-        	showDialog(DIALOG_ABOUT_ID);
+        	startActivity(new Intent(this, AboutTabHost.class));
         	return true;
         case MENU_DONATION:
         	if (!mBillingService.requestPurchase("donation_001")) {
@@ -184,9 +181,6 @@ public class Home extends Activity {
     protected Dialog onCreateDialog(int id) {
     	Dialog dialog;
         switch(id) {
-        case DIALOG_ABOUT_ID:
-            dialog = sobreDialog;
-            break;
         case DIALOG_LUNCH_ID:
             dialog = timerPickerDialog;
             break;
@@ -256,7 +250,6 @@ public class Home extends Activity {
         lunchLayout = (LinearLayout)findViewById(R.id.img_lunch_dialog);
 		homeChart = (XYPlot) findViewById(R.id.home_chart);
         timerPickerDialog = new TimePickerDialog(this);
-		sobreDialog = new AboutDialog(this);
 		
 		timerPickerDialog.setOkOnClickListener(new OnClickListener() {
 			@Override
