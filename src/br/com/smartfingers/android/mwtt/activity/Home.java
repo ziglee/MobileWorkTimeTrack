@@ -82,6 +82,7 @@ public class Home extends Activity {
 	private static final int MENU_ABOUT = 2;
 	private static final int MENU_EXIT = 3;
 	private static final int MENU_DONATION = 4;
+	private static final int MENU_HELP = 5;
 	
 	private static final int DIALOG_LUNCH_ID = 1;
     private static final int DIALOG_CANNOT_CONNECT_ID = 2;
@@ -159,9 +160,10 @@ public class Home extends Activity {
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_HISTORY, 0, R.string.history_menu).setIcon(R.drawable.ic_menu_view);
-	    menu.add(0, MENU_ABOUT, 1, R.string.about_menu).setIcon(R.drawable.ic_menu_info_details);
-	    menu.add(0, MENU_DONATION, 2, R.string.donate_menu).setIcon(R.drawable.ic_menu_allfriends);
-	    menu.add(0, MENU_EXIT, 3, R.string.exit_menu).setIcon(R.drawable.ic_menu_close_clear_cancel);
+	    menu.add(0, MENU_HELP, 1, R.string.help_menu).setIcon(R.drawable.ic_menu_help);
+	    menu.add(0, MENU_ABOUT, 2, R.string.about_menu).setIcon(R.drawable.ic_menu_info_details);
+	    menu.add(0, MENU_DONATION, 3, R.string.donate_menu).setIcon(R.drawable.ic_menu_allfriends);
+	    menu.add(0, MENU_EXIT, 4, R.string.exit_menu).setIcon(R.drawable.ic_menu_close_clear_cancel);
 	    return true;
 	}
     
@@ -170,6 +172,12 @@ public class Home extends Activity {
         switch (item.getItemId()) {
         case MENU_HISTORY:
         	startActivity(new Intent(this, History.class));
+        	return true;
+        case MENU_HELP:
+        	String url = "http://smartfingersinc.wordpress.com/2011/04/07/our-first-application/";
+        	Intent i = new Intent(Intent.ACTION_VIEW);
+        	i.setData(Uri.parse(url));
+        	startActivity(i);
         	return true;
         case MENU_ABOUT:
         	startActivity(new Intent(this, AboutTabHost.class));
