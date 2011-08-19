@@ -8,7 +8,7 @@
     <string name="history_menu">History</string>
     <string name="about_menu">About</string>
     <string name="donate_menu">Donate</string>
-    <string name="help_menu">Help</string>
+    <string name="help_menu">Help/About</string>
     <string name="exit_menu">Exit</string>
     <string name="billing_not_supported_title">Can\'t make purchases</string>
     <string name="billing_not_supported_message">The Market billing
@@ -38,7 +38,7 @@
     <string name="saved_success_toast">Record saved successfully.</string>
     <string name="save_button">Save</string>
     <string name="whats_new_tab_title">What\'s new</string>
-    <string name="credits_tab_title">Credits</string>
+    <string name="help_tab_title">Help</string>
     <string name="whats_new_text">v 1.4 :\n
         <ul>
             <li>Chart showing the last 7 days hours</li>\n

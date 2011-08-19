@@ -8,7 +8,7 @@
     <string name="history_menu">Histórico</string>
     <string name="about_menu">Sobre</string>
     <string name="donate_menu">Doar</string>
-    <string name="help_menu">Ajuda</string>
+    <string name="help_menu">Ajuda/Sobre</string>
     <string name="exit_menu">Sair</string>
     <string name="billing_not_supported_title">Não é possível fazer compras</string>
     <string name="billing_not_supported_message">O serviço de pagamento do Market
@@ -28,7 +28,7 @@
     <string name="lunch_dialog_title">Tempo de Almoço:</string>
     <string name="cancel">Cancelar</string>
     <string name="no_data">Sem dados</string>
-    <string name="about_text">Desenvolvido por <a href="http://http://smartfingersinc.wordpress.com/">Smartfingers</a> e <a href="http://smk-inc.net/">smk-inc.net</a>.\nTodos os direitos reservados.</string>
+    <string name="about_text">Desenvolvido por <a href="http://smartfingersinc.wordpress.com/">Smartfingers</a> e <a href="http://smk-inc.net/">smk-inc.net</a>.\nTodos os direitos reservados.</string>
     <string name="details_context_menu">Detalhes</string>
     <string name="edit_context_menu">Editar</string>
     <string name="delete_context_menu">Excluir</string>
@@ -38,7 +38,7 @@
     <string name="saved_success_toast">Registro salvo com sucesso.</string>
     <string name="save_button">Salvar</string>
     <string name="whats_new_tab_title">Novidades</string>
-    <string name="credits_tab_title">Créditos</string>
+    <string name="help_tab_title">Ajuda</string>
     <string name="whats_new_text">v 1.4 :\n
         <ul>
             <li>Gráfico que exibe as horas feitas nos últimos 7 dias</li>\n

@@ -4,6 +4,7 @@
       android:versionName="1.5" 
       package="br.com.smartfingers.android.mwtt">
     
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.vending.BILLING" />
     
     <application android:icon="@drawable/icon" android:label="@string/app_name">
@@ -20,7 +21,7 @@
         <activity android:name=".activity.AboutTabHost" />
         <activity android:name=".activity.About" />
         <activity android:name=".activity.WhatsNew" />
-        <activity android:name=".activity.Credits" />
+        <activity android:name=".activity.Help" />
         
         <service android:name="BillingService" />
 

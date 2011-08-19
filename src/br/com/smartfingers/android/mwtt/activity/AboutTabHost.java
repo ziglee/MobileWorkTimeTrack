@@ -17,11 +17,19 @@ public class AboutTabHost extends TabActivity {
 		super.onCreate(savedInstanceState);
 		
 		setTitle("WorkTimeTrack ("+getAppVersion(this)+")");
-		
+
+		addTabHelp();
 		addTabAbout();
 		addTabWhatsNew();
-		addTabCredits();
 	}
+
+    private void addTabHelp() {
+        Intent intent = new Intent(this, Help.class);
+        TabHost tabHost = getTabHost();
+        tabHost.addTab(tabHost.newTabSpec("help")
+                .setIndicator(getString(R.string.help_tab_title))
+                .setContent(intent));
+    }
 
     private void addTabAbout() {
         Intent intent = new Intent(this, About.class);
@@ -38,15 +46,6 @@ public class AboutTabHost extends TabActivity {
                 .setIndicator(getString(R.string.whats_new_tab_title))
                 .setContent(intent));
     }
-
-    private void addTabCredits() {
-        Intent intent = new Intent(this, Credits.class);
-        TabHost tabHost = getTabHost();
-        tabHost.addTab(tabHost.newTabSpec("credits")
-                .setIndicator(getString(R.string.credits_tab_title))
-                .setContent(intent));
-    }
-
 	
 	public static String getAppVersion(Context context) {
         try {

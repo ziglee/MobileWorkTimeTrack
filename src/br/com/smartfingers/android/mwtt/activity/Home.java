@@ -79,7 +79,6 @@ public class Home extends Activity {
     private MyPurchaseObserver mPurchaseObserver;
 	
 	private static final int MENU_HISTORY = 1;
-	private static final int MENU_ABOUT = 2;
 	private static final int MENU_EXIT = 3;
 	private static final int MENU_DONATION = 4;
 	private static final int MENU_HELP = 5;
@@ -161,7 +160,6 @@ public class Home extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_HISTORY, 0, R.string.history_menu).setIcon(R.drawable.ic_menu_view);
 	    menu.add(0, MENU_HELP, 1, R.string.help_menu).setIcon(R.drawable.ic_menu_help);
-	    menu.add(0, MENU_ABOUT, 2, R.string.about_menu).setIcon(R.drawable.ic_menu_info_details);
 	    menu.add(0, MENU_DONATION, 3, R.string.donate_menu).setIcon(R.drawable.ic_menu_allfriends);
 	    menu.add(0, MENU_EXIT, 4, R.string.exit_menu).setIcon(R.drawable.ic_menu_close_clear_cancel);
 	    return true;
@@ -174,12 +172,6 @@ public class Home extends Activity {
         	startActivity(new Intent(this, History.class));
         	return true;
         case MENU_HELP:
-        	String url = "http://smartfingersinc.wordpress.com/2011/04/07/our-first-application/";
-        	Intent i = new Intent(Intent.ACTION_VIEW);
-        	i.setData(Uri.parse(url));
-        	startActivity(i);
-        	return true;
-        case MENU_ABOUT:
         	startActivity(new Intent(this, AboutTabHost.class));
         	return true;
         case MENU_DONATION:
@@ -383,7 +375,9 @@ public class Home extends Activity {
         homeChart.setRangeLabel("Horas");
  
         homeChart.setRangeValueFormat(new Format() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
                 long timestamp = ((Number) obj).longValue();
                 long totalMinutes = (timestamp / 60 / 1000);
@@ -399,13 +393,14 @@ public class Home extends Activity {
         });
  
         homeChart.setDomainValueFormat(new Format() {
-            private SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
+			private static final long serialVersionUID = 1L;
+			
+			private SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
  
             @Override
             public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
                 long timestamp = ((Number) obj).longValue();
                 Date date = new Date(timestamp);
-    			System.out.println(date);
                 return new StringBuffer(dateFormat.format(date));
             }
  
