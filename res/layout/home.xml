@@ -24,51 +24,40 @@
 		    <LinearLayout android:orientation="vertical"
 			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
-			    android:layout_weight="1">
-		        <Button
-		            android:id="@+id/reset_button"
-		            android:layout_width="fill_parent" 
-		            android:layout_height="wrap_content" 
-		            android:layout_weight="1"
-		            android:text="Reset"/>
-			    <Button
+			    android:layout_weight="1"
+			    android:layout_marginLeft="5dp">
+			    <ImageButton
 			        android:id="@+id/check_button"
 			        android:layout_width="fill_parent" 
 			        android:layout_height="wrap_content"
 		            android:layout_weight="1"
-		            android:text="Checkin"/>
+		            android:src="@drawable/login"/>
+		        <ImageButton
+		            android:id="@+id/reset_button"
+		            android:layout_width="fill_parent" 
+		            android:layout_height="wrap_content" 
+		            android:layout_weight="1"
+		            android:src="@drawable/cancel"/>
 		    </LinearLayout>
 		</LinearLayout>
 	    
-	    <LinearLayout android:orientation="vertical"
+	    <TableLayout android:orientation="vertical"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:background="@drawable/gradient_box"
 	        android:layout_margin="5dp"
 	        android:padding="10dp">
-	                
-		    <LinearLayout android:orientation="horizontal"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content">
-		        
+	        
+	        <TableRow>
 			    <TextView android:text="@string/in_label" style="@style/MainFont"/>
-			    <TextView android:id="@+id/horario_entrada" style="@style/MainFont.Value"
-	                android:paddingRight="5dp"/>
-		    </LinearLayout>
-		    
-		    <LinearLayout android:orientation="horizontal"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content">
-		        
+			    <TextView android:id="@+id/horario_entrada" style="@style/MainFont.Value" android:paddingRight="5dp"/>
+			</TableRow>
+		    <TableRow>
 			    <TextView android:text="@string/out_label" style="@style/MainFont"/>
 			    <TextView android:id="@+id/horario_saida"  style="@style/MainFont.Value"
 	                android:paddingRight="5dp"/>
-		    </LinearLayout>
-		    	        
-		    <LinearLayout android:orientation="horizontal"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content">
-		        
+			</TableRow>
+		    <TableRow>
 		        <TextView
 	                android:layout_height="fill_parent" 
 	                android:text="@string/lunch_label" 
@@ -91,18 +80,15 @@
 		                style="@style/MainFont.Value"
 		                android:text="1:00"/>
 	            </LinearLayout>
-		    </LinearLayout>
-		    
-		    <LinearLayout android:orientation="horizontal"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content">
-		        
+			</TableRow>
+		    <TableRow>
 		        <TextView android:text="@string/total_label" style="@style/MainFont"
 	                android:textStyle="bold"/>
 			    <TextView android:id="@+id/total" style="@style/MainFont.Value"
 	                android:paddingRight="5dp"/>
-	        </LinearLayout>
-	    </LinearLayout>
+	        </TableRow>
+	    </TableLayout>
+	    
 	    <com.androidplot.xy.XYPlot
 		    android:id="@+id/home_chart"
 		    android:layout_width="fill_parent"

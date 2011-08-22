@@ -15,11 +15,13 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">#FFF</item>
     </style>
     
     <style name="MainFont.Value">
         <item name="android:layout_weight">2</item>
         <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textColor">#FFF</item>
     </style>
     
     <style name="SideImage">

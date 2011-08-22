@@ -34,7 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -51,9 +51,9 @@ import br.com.smartfingers.android.mwtt.db.MyDbAdapter;
 import br.com.smartfingers.android.mwtt.dialog.TimePickerDialog;
 import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
-import com.androidplot.series.XYSeries;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.XYGraphWidget;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYStepMode;
 
@@ -63,8 +63,8 @@ public class Home extends Activity {
 	
 	private TimePickerDialog timerPickerDialog;
 	private TimePicker timePicker;
-	private Button checkButton;
-	private Button resetButton;
+	private ImageButton checkButton;
+	private ImageButton resetButton;
 	private LinearLayout lunchLayout;
 	private TextView horarioEntrada;
 	private TextView horarioSaida;
@@ -77,7 +77,10 @@ public class Home extends Activity {
     private Handler mHandler;
     private BillingService mBillingService;
     private MyPurchaseObserver mPurchaseObserver;
-	
+    
+    private LineAndPointFormatter formatter;
+    private SimpleXYSeries series;
+    
 	private static final int MENU_HISTORY = 1;
 	private static final int MENU_EXIT = 3;
 	private static final int MENU_DONATION = 4;
@@ -96,8 +99,9 @@ public class Home extends Activity {
         
         mDbHelper = new MyDbAdapter(this);
         mDbHelper.open();
-
+        
         setupWidgets();
+        setupChart();
         loadPendingTimeTrack();
         updateDisplayTimeTrack();
         plotChart();
@@ -113,6 +117,70 @@ public class Home extends Activity {
             showDialog(DIALOG_CANNOT_CONNECT_ID);
         }
     }
+
+	private void setupChart() {
+		XYGraphWidget graphWidget = homeChart.getGraphWidget();
+		graphWidget.getGridBackgroundPaint().setColor(Color.WHITE);
+        graphWidget.getGridLinePaint().setColor(Color.BLACK);
+        graphWidget.getGridLinePaint().setPathEffect(new DashPathEffect(new float[]{1,1}, 1));
+        graphWidget.getDomainOriginLinePaint().setColor(Color.BLACK);
+        graphWidget.getRangeOriginLinePaint().setColor(Color.BLACK);
+        graphWidget.setPaddingRight(2);
+        
+        Paint borderPaint = homeChart.getBorderPaint();
+		borderPaint.setStrokeWidth(2);
+        borderPaint.setAntiAlias(false);
+        borderPaint.setColor(Color.GRAY);
+ 
+        Paint lineFill = new Paint();
+        lineFill.setAlpha(200);
+        lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.GREEN, Shader.TileMode.MIRROR));
+        
+        formatter = new LineAndPointFormatter(Color.rgb(0, 0,0), Color.BLUE, Color.RED);
+        formatter.setFillPaint(lineFill);
+        
+        homeChart.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 24*60*60*1000);
+        homeChart.setDomainLabel("Dia");
+        homeChart.setRangeLabel("Horas");
+        
+        homeChart.setRangeValueFormat(new Format() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+                long timestamp = ((Number) obj).longValue();
+                long totalMinutes = (timestamp / 60 / 1000);
+                long totalHours = totalMinutes / 60;
+        		totalMinutes = totalMinutes % 60;
+                return new StringBuffer(TimeTrack.nf.format(totalHours) + ":" + TimeTrack.nf.format(totalMinutes));
+            }
+ 
+            @Override
+            public Object parseObject(String source, ParsePosition pos) {
+                return null;
+            }
+        });
+ 
+        homeChart.setDomainValueFormat(new Format() {
+			private static final long serialVersionUID = 1L;
+			
+			private SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
+ 
+            @Override
+            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+                long timestamp = ((Number) obj).longValue();
+                Date date = new Date(timestamp);
+                return new StringBuffer(dateFormat.format(date));
+            }
+ 
+            @Override
+            public Object parseObject(String source, ParsePosition pos) {
+                return null;
+            }
+        });
+ 
+        homeChart.disableAllMarkup();
+	}
 
     /**
      * Called when this activity becomes visible.
@@ -251,8 +319,8 @@ public class Home extends Activity {
 
 	private void setupWidgets() {
     	timePicker = (TimePicker)findViewById(R.id.main_time_picker);
-        checkButton = (Button)findViewById(R.id.check_button);
-        resetButton = (Button)findViewById(R.id.reset_button);
+        checkButton = (ImageButton)findViewById(R.id.check_button);
+        resetButton = (ImageButton)findViewById(R.id.reset_button);
         horarioEntrada = (TextView)findViewById(R.id.horario_entrada);
         horarioSaida = (TextView)findViewById(R.id.horario_saida);
         almoco = (TextView)findViewById(R.id.almoco);
@@ -283,6 +351,7 @@ public class Home extends Activity {
 		        	
 		        	deleteFile(TimeTrack.FILENAME);		        	
 		        	mDbHelper.createTimeTrack(tt);
+		            plotChart();
 		        }else{
 		        	tt.hourIn = timePicker.getCurrentHour();
 		        	tt.minuteIn = timePicker.getCurrentMinute();
@@ -340,77 +409,17 @@ public class Home extends Activity {
 			hours[x] = tt != null ? tt.getTimeTotalInMilliseconds() : 0;
 		}
 		
-        // create our series from our array of nums:
-        XYSeries series = new SimpleXYSeries(
+		if(series != null){
+			homeChart.removeSeries(series);
+		}
+		
+		series = new SimpleXYSeries(
                 Arrays.asList(days),
                 Arrays.asList(hours),
                 "Horas por Dia");
- 
-        homeChart.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
-        homeChart.getGraphWidget().getGridLinePaint().setColor(Color.BLACK);
-        homeChart.getGraphWidget().getGridLinePaint().setPathEffect(new DashPathEffect(new float[]{1,1}, 1));
-        homeChart.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);
-        homeChart.getGraphWidget().getRangeOriginLinePaint().setColor(Color.BLACK);
- 
-        //homeChart.setBorderStyle(Plot.BorderStyle.SQUARE, null, null);
-        homeChart.getBorderPaint().setStrokeWidth(2);
-        homeChart.getBorderPaint().setAntiAlias(false);
-        homeChart.getBorderPaint().setColor(Color.GRAY);
- 
-        // setup our line fill paint to be a slightly transparent gradient:
-        Paint lineFill = new Paint();
-        lineFill.setAlpha(200);
-        lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.GREEN, Shader.TileMode.MIRROR));
- 
-        LineAndPointFormatter formatter  = new LineAndPointFormatter(Color.rgb(0, 0,0), Color.BLUE, Color.RED);
-        formatter.setFillPaint(lineFill);
-        homeChart.getGraphWidget().setPaddingRight(2);
+        
         homeChart.addSeries(series, formatter);
- 
-        // draw a domain tick for each day:
-        homeChart.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 24*60*60*1000);
- 
-        // customize our domain/range labels
-        homeChart.setDomainLabel("Dia");
-        homeChart.setRangeLabel("Horas");
- 
-        homeChart.setRangeValueFormat(new Format() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-                long timestamp = ((Number) obj).longValue();
-                long totalMinutes = (timestamp / 60 / 1000);
-                long totalHours = totalMinutes / 60;
-        		totalMinutes = totalMinutes % 60;
-                return new StringBuffer(TimeTrack.nf.format(totalHours) + ":" + TimeTrack.nf.format(totalMinutes));
-            }
- 
-            @Override
-            public Object parseObject(String source, ParsePosition pos) {
-                return null;
-            }
-        });
- 
-        homeChart.setDomainValueFormat(new Format() {
-			private static final long serialVersionUID = 1L;
-			
-			private SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
- 
-            @Override
-            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-                long timestamp = ((Number) obj).longValue();
-                Date date = new Date(timestamp);
-                return new StringBuffer(dateFormat.format(date));
-            }
- 
-            @Override
-            public Object parseObject(String source, ParsePosition pos) {
-                return null;
-            }
-        });
- 
-        homeChart.disableAllMarkup();
+        homeChart.redraw();
 	}
 
 	private void loadPendingTimeTrack(){
@@ -470,10 +479,10 @@ public class Home extends Activity {
 	    		horarioSaida.setText(tt.getTimeOut());
 	    		total.setText(tt.getTimeTotalFormated());
 	    		
-	        	checkButton.setText("Checkout");
+	    		checkButton.setImageResource(R.drawable.logout);
 	        	checkButton.setEnabled(false);
 	    	}else{
-	    		checkButton.setText("Checkout");
+	    		checkButton.setImageResource(R.drawable.logout);
 	        	checkButton.setEnabled(true);
 	    	}
     	}else{
@@ -482,7 +491,7 @@ public class Home extends Activity {
     		almoco.setText("");
     		total.setText("");
     		
-    		checkButton.setText("Checkin");
+    		checkButton.setImageResource(R.drawable.login);
         	checkButton.setEnabled(true);
     	}
     }
