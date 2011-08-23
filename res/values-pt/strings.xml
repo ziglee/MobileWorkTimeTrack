@@ -41,7 +41,12 @@
     <string name="save_button">Salvar</string>
     <string name="whats_new_tab_title">Novidades</string>
     <string name="help_tab_title">Ajuda</string>
-    <string name="whats_new_text">v 1.4 :\n
+    <string name="whats_new_text">v 1.5 :\n
+    	<ul>
+    		<li>O gráfico tem um marcador para horas extras (08:00)</li>\n
+    		<li>Você pode adicionar um registro para qualquer data</li>
+    	</ul>
+    	\nv 1.4 :\n
         <ul>
             <li>Gráfico que exibe as horas feitas nos últimos 7 dias</li>\n
             <li>Devido a biblioteca de gráficos, não damos mais suporte às versões de Android 1.6 e 1.5</li>

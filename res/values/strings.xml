@@ -41,7 +41,12 @@
     <string name="save_button">Save</string>
     <string name="whats_new_tab_title">What\'s new</string>
     <string name="help_tab_title">Help</string>
-    <string name="whats_new_text">v 1.4 :\n
+    <string name="whats_new_text">v 1.5 :\n
+    	<ul>
+    		<li>The chart has a marker for overtime (08:00)</li>
+    		<li>You can add a record for any date</li>
+    	</ul>
+    	v 1.4 :\n
         <ul>
             <li>Chart showing the last 7 days hours</li>\n
             <li>Due to charts library, we doesn\'t suport Android versions 1.6 and 1.5 anymore</li>
