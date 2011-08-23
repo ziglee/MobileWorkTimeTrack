@@ -21,6 +21,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.LinearGradient;
@@ -29,12 +33,15 @@ import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -47,19 +54,26 @@ import br.com.smartfingers.android.mwtt.Consts.ResponseCode;
 import br.com.smartfingers.android.mwtt.PurchaseObserver;
 import br.com.smartfingers.android.mwtt.R;
 import br.com.smartfingers.android.mwtt.ResponseHandler;
+import br.com.smartfingers.android.mwtt.Utils;
 import br.com.smartfingers.android.mwtt.db.MyDbAdapter;
 import br.com.smartfingers.android.mwtt.dialog.TimePickerDialog;
 import br.com.smartfingers.android.mwtt.entity.TimeTrack;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.XLayoutStyle;
+import com.androidplot.xy.XPositionMetric;
 import com.androidplot.xy.XYGraphWidget;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYStepMode;
+import com.androidplot.xy.YValueMarker;
 
 public class Home extends Activity {
 	
 	public static final String LOG_TAG = "MobileWorkTimeTrack";
+
+	private static final String PREFERENCES = "PREFERENCES";
+	private static final String PREFERENCES_UPDATE_11 = "PREFERENCES_UPDATE_11";
 	
 	private TimePickerDialog timerPickerDialog;
 	private TimePicker timePicker;
@@ -116,7 +130,69 @@ public class Home extends Activity {
         if (!mBillingService.checkBillingSupported()) {
             showDialog(DIALOG_CANNOT_CONNECT_ID);
         }
+        
+        showUpdateNotices();
     }
+
+	private void showUpdateNotices() {
+		try {
+        	Locale localeBr = new Locale("pt", "BR");
+        	Locale localeDefault = Locale.getDefault();
+			Context appContext = this.getApplicationContext();
+			PackageInfo info = Utils.getPackageInfo(appContext);
+			SharedPreferences prefs = getSharedPreferences(PREFERENCES, Activity.MODE_PRIVATE);
+			
+			boolean update11 = prefs.getBoolean(PREFERENCES_UPDATE_11, false);
+			if (info.versionCode == 11 
+					&& !update11
+					&& localeDefault.equals(localeBr)) {
+				final Dialog updateNoticeDialog = new Dialog(this);
+				updateNoticeDialog.setContentView(R.layout.news_dialog);
+				updateNoticeDialog.setTitle("Novidades");
+				updateNoticeDialog.setCancelable(true);
+				
+				ImageView imageView = (ImageView) updateNoticeDialog.findViewById(R.id.sabedoria_screen);
+	    		TextView sabedoriaText = (TextView) updateNoticeDialog.findViewById(R.id.sabedoria_text);
+	    		TextView sobreText = (TextView) updateNoticeDialog.findViewById(R.id.sobre_text);
+	    		Button marketButton = (Button) updateNoticeDialog.findViewById(R.id.market_sabedoria);
+	    		Button closeButton = (Button) updateNoticeDialog.findViewById(R.id.close_dialog);
+
+	    		Uri uri = Uri.parse("https://market.android.com/details?id=net.cassiolandim.sabedoria");
+				final Intent marketIntent = new Intent(Intent.ACTION_VIEW, uri);
+				
+	    		sabedoriaText.setAutoLinkMask(Linkify.ALL);
+	    		sabedoriaText.setLinksClickable(true);
+	    		sabedoriaText.setText("Conheça nosso mais novo aplicativo 'Sabedoria'.");
+	    		sobreText.setText(R.string.whats_new_text);
+	    		
+	    		View.OnClickListener marketClickListener = new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						updateNoticeDialog.dismiss();
+						startActivity(marketIntent);
+					}
+				};
+				
+				imageView.setOnClickListener(marketClickListener);
+				marketButton.setOnClickListener(marketClickListener);
+	    		
+	    		closeButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						updateNoticeDialog.dismiss();
+					}
+	    		});
+	    		
+				updateNoticeDialog.show();
+				
+				Editor edit = prefs.edit();
+				edit.putBoolean(PREFERENCES_UPDATE_11, true);
+				edit.commit();
+			}
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void setupChart() {
 		XYGraphWidget graphWidget = homeChart.getGraphWidget();
@@ -131,6 +207,10 @@ public class Home extends Activity {
 		borderPaint.setStrokeWidth(2);
         borderPaint.setAntiAlias(false);
         borderPaint.setColor(Color.GRAY);
+        
+        homeChart.addMarker(new YValueMarker(8 * 60 * 60 * 1000, "",
+        		new XPositionMetric(5, XLayoutStyle.ABSOLUTE_FROM_LEFT),
+        		Color.RED, Color.BLACK));
  
         Paint lineFill = new Paint();
         lineFill.setAlpha(200);
@@ -201,6 +281,8 @@ public class Home extends Activity {
         
         timePicker.setCurrentHour(currentHour);
         timePicker.setCurrentMinute(currentMinute);
+        
+        plotChart();
     }
 
     /**

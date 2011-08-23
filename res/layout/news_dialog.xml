@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<ScrollView 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1">
+		<LinearLayout 
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical">
+			<LinearLayout
+				android:id="@+id/sabedoria_layout"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:gravity="center"
+				android:layout_margin="4dp">
+				<TextView 
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/sabedoria_text"
+					android:text="Teste sab"
+					android:textColor="#FFF"
+					android:layout_margin="3dp"
+					android:gravity="center"/>
+				<ImageView
+					android:id="@+id/sabedoria_screen"
+					android:layout_width="fill_parent"
+					android:layout_height="265dp" 
+					android:src="@drawable/sabedoria_screen"
+					android:scaleType="centerInside"
+					android:adjustViewBounds="true"/>
+			</LinearLayout>
+			<TextView 
+				android:id="@+id/sobre_text" 
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:textColor="#FFF" 
+				android:padding="10dp"
+				android:text="Teste sobre"
+				android:layout_weight="1"/>
+		</LinearLayout>
+	</ScrollView>
+	<LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:padding="2dp">
+		<Button 
+			android:id="@+id/market_sabedoria"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Mais detalhes"/>
+		<Button
+			android:id="@+id/close_dialog" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="Não, obrigado"/>
+	</LinearLayout>
+</LinearLayout>

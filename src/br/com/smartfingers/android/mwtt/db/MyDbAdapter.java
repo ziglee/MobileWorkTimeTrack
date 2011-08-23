@@ -145,6 +145,7 @@ public class MyDbAdapter {
     
     public boolean updateTimeTrack(TimeTrack tt) {
         ContentValues args = new ContentValues();
+        args.put(KEY_ENTRY_DATE, sdf.format(tt.date));
         args.put(KEY_HOUR_IN, tt.hourIn);
         args.put(KEY_MINUTE_IN, tt.minuteIn);
         args.put(KEY_HOUR_OUT, tt.hourOut);
@@ -176,13 +177,18 @@ public class MyDbAdapter {
     }
     
     public static String getTodayDateFormated(){
-    	Calendar now = new GregorianCalendar();
-		now.set(Calendar.HOUR, 0);
-		now.set(Calendar.MINUTE, 0);
-		now.set(Calendar.SECOND, 0);
-		now.set(Calendar.MILLISECOND, 0);
+		return getDateFormated(new Date());
+    }
+    
+    public static String getDateFormated(Date date){
+    	Calendar calendar = GregorianCalendar.getInstance();
+    	calendar.setTime(date);
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 		
-		return sdf.format(now.getTime());
+		return sdf.format(calendar.getTime());
     }
     
     private static class DatabaseHelper extends SQLiteOpenHelper {

@@ -32,10 +32,12 @@
     <string name="details_context_menu">Details</string>
     <string name="edit_context_menu">Edit</string>
     <string name="delete_context_menu">Delete</string>
+    <string name="add_menu">Add</string>
     <string name="delete_all_menu">Delete all</string>
     <string name="delete_all_alert_dialog">All records will be deleted. Do you want to proceed?</string>
     <string name="delete_alert_dialog">This record will be deleted. Do you want to proceed?</string>
     <string name="saved_success_toast">Record saved successfully.</string>
+    <string name="saved_error_toast">There is already another record for this date.</string>
     <string name="save_button">Save</string>
     <string name="whats_new_tab_title">What\'s new</string>
     <string name="help_tab_title">Help</string>

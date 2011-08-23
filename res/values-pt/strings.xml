@@ -32,10 +32,12 @@
     <string name="details_context_menu">Detalhes</string>
     <string name="edit_context_menu">Editar</string>
     <string name="delete_context_menu">Excluir</string>
+    <string name="add_menu">Adicionar</string>
     <string name="delete_all_menu">Excluir tudo</string>
     <string name="delete_all_alert_dialog">Todos os registros serão apagados. Deseja continuar?</string>
     <string name="delete_alert_dialog">Este registro será apagado. Deseja continuar?</string>
     <string name="saved_success_toast">Registro salvo com sucesso.</string>
+    <string name="saved_error_toast">Já existe outro registro com esta data.</string>
     <string name="save_button">Salvar</string>
     <string name="whats_new_tab_title">Novidades</string>
     <string name="help_tab_title">Ajuda</string>

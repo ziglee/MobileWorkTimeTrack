@@ -26,7 +26,7 @@ public class WhatsNew extends Activity {
     		TextView sabedoriaText = (TextView) findViewById(R.id.sabedoria_text);
     		sabedoriaText.setAutoLinkMask(Linkify.ALL);
     		sabedoriaText.setLinksClickable(true);
-    		sabedoriaText.setText("Conheça nossa mais novo aplicativo 'Sabedoria'." +
+    		sabedoriaText.setText("Conheça nosso mais novo aplicativo 'Sabedoria'." +
     				"\nAcesse o Android Market https://market.android.com/details?id=net.cassiolandim.sabedoria");
     	} else {
     		sabedoriaLayout.setVisibility(View.GONE);

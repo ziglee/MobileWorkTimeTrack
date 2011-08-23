@@ -29,7 +29,8 @@ public class History extends ListActivity {
 	private static final int MENU_ITEM_DETAILS = 0;
 	private static final int MENU_ITEM_EDIT = 1;
 	private static final int MENU_ITEM_DELETE = 2;
-	
+    
+	private static final int MENU_ADD = 1;
 	private static final int MENU_DELETE_ALL = 0;
 	
 	@Override
@@ -80,7 +81,8 @@ public class History extends ListActivity {
     }
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_DELETE_ALL, 0, R.string.delete_all_menu).setIcon(R.drawable.ic_menu_close_clear_cancel);
+		menu.add(0, MENU_ADD, 0, R.string.add_menu).setIcon(R.drawable.ic_menu_add);
+		menu.add(0, MENU_DELETE_ALL, 1, R.string.delete_all_menu).setIcon(R.drawable.ic_menu_close_clear_cancel);
 		return true;
 	}
 
@@ -138,6 +140,9 @@ public class History extends ListActivity {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case MENU_ADD:
+			startActivity(new Intent(this, Edit.class));
+			return true;
 		case MENU_DELETE_ALL:
 			deleteAllAlertDialog.show();
 			return true;

@@ -4,6 +4,21 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
+    <LinearLayout 
+    	android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_box"
+        android:layout_margin="5dp"
+        android:padding="10dp">
+        <DatePicker 
+        	android:id="@+id/date_picker"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:startYear="2011"
+        	android:endYear="2050">
+        </DatePicker>
+    </LinearLayout>
+    
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
